@@ -57,10 +57,10 @@ export default function RootLayout({ children }) {
             <span><FaTiktok className="social-icon" /></span>
           </div>
           <div>
-            <h1 className="lg:text-xs">Free Shipping This Week Order Over - $55</h1>
+            <h2 className="lg:text-xs">Free Shipping This Week Order Over - $55</h2>
           </div>
         </div>
-
+<h1>توتو ستور هو متجر الكتروني لبيع الملابس و التيشيرتات المطبوعه و يمكنك طباعة اي رسمه خاصه بك من خلال توتو ستور تواصل معهم الان</h1>
         <header className="header">
           <div className="logo"><CgAdidas /></div>
           <div className="search">
