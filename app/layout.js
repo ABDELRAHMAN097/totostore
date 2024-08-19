@@ -30,6 +30,13 @@ export const metadata = {
     "تيشيرتات جفلات",
   ],
   author: "Abdelrahman Magdy",
+  url: "https://totostore.vercel.app/",
+  image: "../img/ir2.jpeg",
+  social: {
+    //   twitter: "@YourTwitterHandle",
+    facebook: "https://www.facebook.com/profile.php?id=61563414478280",
+    //   linkedin: "YourLinkedInProfile"
+  },
   categories: [
     "ملابس",
     "تيشيرتات",
