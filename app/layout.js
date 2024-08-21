@@ -9,8 +9,6 @@ import { IoBagHandleOutline } from "react-icons/io5";
 import { FaFacebook } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaTiktok } from "react-icons/fa";
-import Signup from "./signup/page";
-import Signin from "./signin/page";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -57,10 +55,9 @@ export default function RootLayout({ children }) {
             <span><FaTiktok className="social-icon" /></span>
           </div>
           <div>
-            <h2 className="lg:text-xs">Free Shipping This Week Order Over - $55</h2>
+            <h2 className="text-sm md:2xl">Free Shipping This Week Order Over - $55</h2>
           </div>
         </div>
-<h1>توتو ستور هو متجر الكتروني لبيع الملابس و التيشيرتات المطبوعه و يمكنك طباعة اي رسمه خاصه بك من خلال توتو ستور تواصل معهم الان</h1>
         <header className="header">
           <div className="logo"><CgAdidas /></div>
           <div className="search">
@@ -71,7 +68,6 @@ export default function RootLayout({ children }) {
           <Link className="link" href="/signup">
           <IoPersonOutline />
           </Link>
-
           <FaRegHeart />
           <IoBagHandleOutline />
           </div>

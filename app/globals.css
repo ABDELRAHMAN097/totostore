@@ -6,16 +6,15 @@
 /* nav style */
 .head{
   display: flex;
-  padding: 10px 20px;
+  padding: 10px 15px;
   align-items: center;
   justify-content: space-between;
 }
 .social{
   display: flex;
-  padding: 10px 20px;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 5px;
 }
 .social span{
   background-color: #e6e6e6;
@@ -38,7 +37,7 @@ h1{
 }
 .header{
   display: flex;
-  padding: 10px 20px;
+  padding: 10px 15px;
   align-items: center;
   justify-content: space-between;
   border-top: 1px solid rgba(0, 0, 0, 0.13);
@@ -58,6 +57,7 @@ h1{
   border: #333333 solid 1px;
 }
 .search-info{
+  max-width: 100%;
   border: none;
   outline: none;
 }
@@ -74,6 +74,19 @@ h1{
   font-size: 25px;
   gap: 1rem;
 }
+@media screen and (max-width : 767px){
+  .logo{
+    font-size: 35px;
+    margin-right: 6px;
+    color: #d60096;
+  }
+  .icons{
+    font-size: 20px;
+    margin-left: 6px;
+    gap: 6px;
+  }
+}
+
 .nav{
   padding: 20px;
   display: flex;

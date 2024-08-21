@@ -1,8 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import { storage, db } from "../firebase";
-import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { useRouter } from "next/router"; // لاستخدام إعادة التوجيه
+import { storage, db, auth } from "../firebase"; // تأكد من أنك استوردت auth
+import { collection, addDoc, getDocs, deleteDoc, doc, getDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { onAuthStateChanged } from "firebase/auth"; // لاستيراد onAuthStateChanged
 
 export default function Page() {
   const [products, setProducts] = useState([]);
@@ -11,6 +13,8 @@ export default function Page() {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Men");
+  const [role, setRole] = useState(null); // لتخزين دور المستخدم
+  const router = useRouter(); // لاستخدام إعادة التوجيه
 
   const uploadProductImage = async (file) => {
     const storageRef = ref(storage, `products/${file.name}`);
@@ -86,10 +90,6 @@ export default function Page() {
     }
   };
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
   const handleDeleteProduct = async (productId) => {
     try {
       await deleteDoc(doc(db, "products", productId));
@@ -99,6 +99,36 @@ export default function Page() {
       console.error("Error deleting product:", error);
     }
   };
+
+  useEffect(() => {
+    const checkUserRole = async (user) => {
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (userDoc.exists()) {
+        const userRole = userDoc.data().role;
+        setRole(userRole);
+
+        if (userRole !== "admin") {
+          router.push("/"); // إعادة التوجيه إذا لم يكن المستخدم أدمن
+        } else {
+          fetchProducts(); // جلب المنتجات إذا كان المستخدم أدمن
+        }
+      } else {
+        router.push("/signin"); // إعادة التوجيه إذا لم يكن هناك وثيقة للمستخدم
+      }
+    };
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        checkUserRole(user);
+      } else {
+        router.push("/signin"); // إعادة التوجيه إذا لم يكن المستخدم مسجل دخول
+      }
+    });
+  }, [router]);
+
+  if (role !== "admin") {
+    return null; // أو يمكنك عرض مكون تحميل أثناء انتظار التحقق من الدور
+  }
 
   return (
     <div className="control">
