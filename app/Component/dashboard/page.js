@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router"; // لاستخدام إعادة التوجيه
-import { storage, db, auth } from "../firebase"; // تأكد من أنك استوردت auth
+import { useRouter } from "next/router"; 
+import { storage, db, auth } from "firebase"; 
 import { collection, addDoc, getDocs, deleteDoc, doc, getDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { onAuthStateChanged } from "firebase/auth"; // لاستيراد onAuthStateChanged
+import { onAuthStateChanged } from "firebase/auth"; 
 
 export default function Page() {
   const [products, setProducts] = useState([]);
@@ -13,8 +13,8 @@ export default function Page() {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Men");
-  const [role, setRole] = useState(null); // لتخزين دور المستخدم
-  const router = useRouter(); // لاستخدام إعادة التوجيه
+  const [role, setRole] = useState(null); 
+  const router = useRouter(); 
 
   const uploadProductImage = async (file) => {
     const storageRef = ref(storage, `products/${file.name}`);
