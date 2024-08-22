@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { ref, storage, uploadBytes, getDownloadURL } from "firebase/storage";
+import Link from "next/link";
 
 export default function Page() {
   const [products, setProducts] = useState([]);
@@ -56,7 +57,7 @@ export default function Page() {
       const success = await addProductWithImage(productData);
       if (success) {
         resetForm();
-        fetchProducts(); // تحديث قائمة المنتجات بعد الإضافة
+        fetchProducts();
       } else {
         console.error("Failed to add product.");
       }
@@ -133,6 +134,11 @@ export default function Page() {
         </select>
         <input type="file" onChange={handleFileChange} />
         <button onClick={handleAddProduct}>Add Product</button>
+      </div>
+
+      <div>
+        <h2>user to admin</h2>
+        <Link href="/isAdmin">All Admins</Link>
       </div>
 
       <div>

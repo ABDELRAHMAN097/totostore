@@ -1,3 +1,5 @@
+"use client";
+
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
@@ -9,41 +11,25 @@ import { IoBagHandleOutline } from "react-icons/io5";
 import { FaFacebook } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaTiktok } from "react-icons/fa";
+import { useState, useEffect } from "react";
+
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-  title: "toto store-توتو ستور",
-  description: "توتو ستور هو متجر الكتروني لبيع الملابس و التيشيرتات المطبوعه و يمكنك طباعة اي رسمه خاصه بك من خلال توتو ستور تواصل معهم الان",
-  keywords: [
-    "متجر الكتروني",
-    "توتو ستور",
-    "طباعة ملابس",
-    "تيشيرتات مطبوعه",
-    "فاشون",
-    "موضه",
-    "ملابس",
-    "تيشيرتات حسب تخصصك",
-    "تيشيرتات للمبرمجين",
-    "تيشيرتات للرياضه و الجيم",
-    "تيشيرتات جفلات",
-  ],
-  author: "Abdelrahman Magdy",
-  url: "https://totostore.vercel.app/",
-  image: "../img/ir2.jpeg",
-  social: {
-    //   twitter: "@YourTwitterHandle",
-    facebook: "https://www.facebook.com/profile.php?id=61563414478280",
-    //   linkedin: "YourLinkedInProfile"
-  },
-  categories: [
-    "ملابس",
-    "تيشيرتات",
-    "طباعة ملابس",
-    "تيشيرتات قطن",
-  ],
-};
-
 export default function RootLayout({ children }) {
+  const [admin, setAdmin] = useState(false);
+
+  useEffect(() => {
+    // هنا تقوم بجلب بيانات المستخدم والتحقق إذا كان Admin أم لا
+    // على سبيل المثال، يمكنك جلب هذه البيانات من Firebase:
+    const fetchUserData = async () => {
+      // استبدل هذا الجزء بالمنطق الخاص بك للتحقق من حالة المستخدم
+      const userIsAdmin = true; // فرضًا أن هذه هي النتيجة بعد التحقق
+      setAdmin(userIsAdmin);
+    };
+
+    fetchUserData();
+  }, []);
+
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -70,20 +56,20 @@ export default function RootLayout({ children }) {
             <FaSearch className="search-icon" />
           </div>
           <div className="icons">
-          <Link className="link" href="/signup">
-          <IoPersonOutline />
-          </Link>
-          <FaRegHeart />
-          <IoBagHandleOutline />
+            <Link className="link" href="/signup">
+              <IoPersonOutline />
+            </Link>
+            <FaRegHeart />
+            <IoBagHandleOutline />
           </div>
         </header>
 
-        {/* head */}
+        {/* nav */}
 
         <nav className="nav">
           <Link className="link" href="/">Home</Link>
           <Link className="link" href="/">Categories</Link>
-          <Link className="link" href="/dashboard">dashboard</Link>
+          {admin && <Link className="link" href="/dashboard">Dashboard</Link>}
         </nav>
 
         {children}
@@ -109,7 +95,6 @@ export default function RootLayout({ children }) {
             </div>
           </div>
 
-        
           <div className="w-full bg-black/20 p-4 text-center cursor-pointer">
             © 2023 Copyright :
             <a className="cursor-pointer" href="https://tw-elements.com/"> totostore</a>
