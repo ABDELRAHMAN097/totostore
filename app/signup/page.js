@@ -13,14 +13,12 @@ export default function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      // إنشاء المستخدم
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // إضافة بيانات المستخدم إلى Firestore مع تعيين حقل isAdmin
       await setDoc(doc(db, "users", user.uid), {
         email: email,
-        isAdmin: false,  // تعيين هذا المستخدم كـ Admin
+        isAdmin: false,
       });
 
       toast.success("Account created successfully!");
@@ -35,7 +33,6 @@ export default function Signup() {
       <form className="relative" onSubmit={handleSignup}>
         <h1 className="text-white mb-6">Create Account Now</h1>
         <input
-          className="peer block min-h-[auto] w-full rounded border bg-transparent py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -43,15 +40,14 @@ export default function Signup() {
           required
         />
         <input
-          className="my-6 peer block min-h-[auto] w-full rounded border bg-transparent py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           required
         />
-        <Link className="rounded py-2 px-3 mr-3 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal bg-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong" href="/signin">signin</Link>
-        <button className="rounded px-3 mr-3 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal bg-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong" type="submit">Sign Up</button>
+        <Link href="/signin">Sign In</Link>
+        <button type="submit">Sign Up</button>
       </form>
     </div>
   );

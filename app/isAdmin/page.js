@@ -1,13 +1,11 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
-import { db } from "../lib/firebase"; // تأكد من أنك تستورد قاعدة البيانات بشكل صحيح
+import { db } from "../lib/firebase";
 
 export default function ManageUsers() {
   const [users, setUsers] = useState([]);
 
-  // استدعاء المستخدمين من Firestore عند تحميل الصفحة
   useEffect(() => {
     const fetchUsers = async () => {
       const usersCollection = collection(db, "users");
@@ -22,15 +20,13 @@ export default function ManageUsers() {
     fetchUsers();
   }, []);
 
-  // دالة لتعيين أو إزالة دور Admin
   const toggleAdmin = async (uid, isAdmin) => {
     try {
       const userRef = doc(db, "users", uid);
       await updateDoc(userRef, {
-        isAdmin: !isAdmin // تغيير حالة Admin
+        isAdmin: !isAdmin
       });
 
-      // تحديث حالة المستخدمين محليًا بعد تغيير الحالة في Firestore
       setUsers(prevUsers =>
         prevUsers.map(user =>
           user.uid === uid ? { ...user, isAdmin: !isAdmin } : user
@@ -48,11 +44,7 @@ export default function ManageUsers() {
         {users.map(user => (
           <li key={user.uid} className="mb-2 p-2 border-b border-gray-200">
             <span className="mr-4">{user.email}</span>
-            <span
-              className={`${
-                user.isAdmin ? "text-green-600" : "text-red-600"
-              } font-bold`}
-            >
+            <span className={`${user.isAdmin ? "text-green-600" : "text-red-600"} font-bold`}>
               {user.isAdmin ? "Admin" : "User"}
             </span>
             <button
