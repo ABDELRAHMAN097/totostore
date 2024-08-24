@@ -19,15 +19,11 @@ export default function RootLayout({ children }) {
   const [admin, setAdmin] = useState(false);
 
   useEffect(() => {
-    // هنا تقوم بجلب بيانات المستخدم والتحقق إذا كان Admin أم لا
-    // على سبيل المثال، يمكنك جلب هذه البيانات من Firebase:
-    const fetchUserData = async () => {
-      // استبدل هذا الجزء بالمنطق الخاص بك للتحقق من حالة المستخدم
-      const userIsAdmin = true; // فرضًا أن هذه هي النتيجة بعد التحقق
-      setAdmin(userIsAdmin);
-    };
-
-    fetchUserData();
+    // استرداد حالة isAdmin من localStorage
+    const storedIsAdmin = localStorage.getItem("isAdmin");
+    if (storedIsAdmin) {
+      setAdmin(JSON.parse(storedIsAdmin));
+    }
   }, []);
 
   return (
