@@ -65,7 +65,8 @@ export default function RootLayout({ children }) {
         <nav className="nav">
           <Link className="link" href="/">Home</Link>
           <Link className="link" href="/">Categories</Link>
-           {admin && <Link className="link" href="/dashboard">Dashboard</Link>}
+           {/* {admin && <Link className="link" href="/dashboard">Dashboard</Link>} */}
+           <Link className="link" href="/dashboard">Dashboard</Link>
         </nav>
 
         {children}

@@ -44,10 +44,10 @@ const page = () => {
         {products.map(product => (
           <div className="border my-2 mx-1 w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark" key={product.id}>
             <img className="rounded-t-lg" src={product.imageUrl} alt={product.name} width="200" />
-            <div className="text-surface dark:text-black">
+            <div className="text-surface dark:text-black p-2">
             <h2 className="text-surface dark:text-black">{product.name}</h2>
             <p className="text-surface dark:text-black">Price: ${product.price}</p>
-            <p className="text-surface dark:text-black">Description: {product.description}</p>
+          
             <p className="text-surface dark:text-black">Category: {product.category}</p>
             </div>
           </div>

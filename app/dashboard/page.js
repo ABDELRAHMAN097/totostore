@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import { db } from "../firebase";
+import { db, storage } from "../firebase"; 
 import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
-import { ref, storage, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Link from "next/link";
 
 export default function Page() {
@@ -14,14 +14,17 @@ export default function Page() {
   const [category, setCategory] = useState("Men");
 
   const uploadProductImage = async (file) => {
+    if (!file) {
+      throw new Error("لا يوجد ملف للرفع.");
+    }
     const storageRef = ref(storage, `products/${file.name}`);
     try {
       const snapshot = await uploadBytes(storageRef, file);
       const downloadURL = await getDownloadURL(snapshot.ref);
-      console.log("Image URL:", downloadURL);
+      console.log("رابط الصورة:", downloadURL);
       return downloadURL;
     } catch (error) {
-      console.error("Error uploading image:", error);
+      console.error("خطأ في رفع الصورة:", error);
       throw error;
     }
   };
@@ -33,16 +36,18 @@ export default function Page() {
         ...productData,
         imageUrl,
       });
-      console.log("Product added with ID: ", docRef.id);
+      console.log("تم إضافة المنتج بالمعرف:", docRef.id);
       return true;
     } catch (error) {
-      console.error("Error adding product: ", error);
+      console.error("خطأ في إضافة المنتج:", error);
       return false;
     }
   };
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const selectedFile = e.target.files[0];
+    console.log("الملف المحدد:", selectedFile);
+    setFile(selectedFile);
   };
 
   const handleAddProduct = async () => {
@@ -59,10 +64,10 @@ export default function Page() {
         resetForm();
         fetchProducts();
       } else {
-        console.error("Failed to add product.");
+        console.error("فشل في إضافة المنتج.");
       }
     } else {
-      console.error("No file selected or missing product details.");
+      console.error("لم يتم تحديد ملف أو تفاصيل المنتج مفقودة.");
     }
   };
 
@@ -83,7 +88,7 @@ export default function Page() {
       }));
       setProducts(productsData);
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error("خطأ في جلب المنتجات:", error);
     }
   };
 
@@ -95,9 +100,9 @@ export default function Page() {
     try {
       await deleteDoc(doc(db, "products", productId));
       setProducts(products.filter((product) => product.id !== productId));
-      console.log("Product deleted with ID:", productId);
+      console.log("تم حذف المنتج بالمعرف:", productId);
     } catch (error) {
-      console.error("Error deleting product:", error);
+      console.error("خطأ في حذف المنتج:", error);
     }
   };
 
@@ -107,20 +112,20 @@ export default function Page() {
         <input
           className="text-black"
           type="text"
-          placeholder="Product Name"
+          placeholder="اسم المنتج"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
         <input
           className="text-black"
           type="number"
-          placeholder="Product Price"
+          placeholder="سعر المنتج"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
         />
         <textarea
           className="text-black textarea"
-          placeholder="Product Description"
+          placeholder="وصف المنتج"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
@@ -129,22 +134,22 @@ export default function Page() {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         >
-          <option value="Men">Men</option>
-          <option value="Women">Women</option>
+          <option value="Men">رجال</option>
+          <option value="Women">نساء</option>
         </select>
         <input type="file" onChange={handleFileChange} />
-        <button onClick={handleAddProduct}>Add Product</button>
+        <button onClick={handleAddProduct}>إضافة منتج</button>
       </div>
 
       <div>
-        <h2>user to admin</h2>
-        <Link href="/isAdmin">All Admins</Link>
+        <h2>المستخدم إلى الإدارة</h2>
+        <Link href="/isAdmin">كل المدراء</Link>
       </div>
 
       <div>
-        <h1>Products Dashboard</h1>
+        <h1>لوحة تحكم المنتجات</h1>
         {products.length === 0 ? (
-          <p>No products found</p>
+          <p>لا توجد منتجات</p>
         ) : (
           <div className="products">
             {products.map((product) => (
@@ -157,11 +162,11 @@ export default function Page() {
                 />
                 <div className="card-body">
                   <h2>{product.name}</h2>
-                  <p>Price: ${product.price}</p>
-                  <p>Description: {product.description}</p>
-                  <p>Category: {product.category}</p>
+                  <p>السعر: ${product.price}</p>
+                  <p>الوصف: {product.description}</p>
+                  <p>الفئة: {product.category}</p>
                   <button onClick={() => handleDeleteProduct(product.id)}>
-                    Delete Product
+                    حذف
                   </button>
                 </div>
               </div>
