@@ -1,5 +1,4 @@
 "use client";
-
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
@@ -12,19 +11,24 @@ import { FaFacebook } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaTiktok } from "react-icons/fa";
 import { useState, useEffect } from "react";
+import { IoMdArrowDropdown } from "react-icons/io";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
   const [admin, setAdmin] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
-    // استرداد حالة isAdmin من localStorage
     const storedIsAdmin = localStorage.getItem("isAdmin");
     if (storedIsAdmin) {
       setAdmin(JSON.parse(storedIsAdmin));
     }
   }, []);
+
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
 
   return (
     <html lang="en">
@@ -39,7 +43,7 @@ export default function RootLayout({ children }) {
             <span><FaTiktok className="social-icon" /></span>
           </div>
           <div>
-            <h2 className="text-sm md:2xl">Free Shipping This Week Order Over - $55</h2>
+            <h2 className="text-[14px] md:text-[16px]">Free Shipping This Week Order Over - $55</h2>
           </div>
         </div>
 
@@ -64,7 +68,19 @@ export default function RootLayout({ children }) {
 
         <nav className="nav">
           <Link className="link" href="/">Home</Link>
-          <Link className="link" href="/">Categories</Link>
+          <div className="relative inline-block">
+        <button className="link flex items-center" onClick={toggleDropdown}>
+          Categories <IoMdArrowDropdown className="text-2xl" />
+        </button>
+        
+        {showDropdown && (
+          <div className="absolute z-30 left-0 mt-2 w-32 bg-white border rounded-lg shadow-lg">
+            <Link className="block px-4 py-2 text-gray-800 hover:bg-gray-200 rounded-lg" href="/Men">Men</Link>
+            <Link className="block px-4 py-2 text-gray-800 hover:bg-gray-200 rounded-lg" href="/Women">Women</Link>
+            <Link className="block px-4 py-2 text-gray-800 hover:bg-gray-200 rounded-lg" href="/Accessories">Accessories</Link>
+          </div>
+        )}
+      </div>
            {/* {admin && <Link className="link" href="/dashboard">Dashboard</Link>} */}
            <Link className="link" href="/dashboard">Dashboard</Link>
         </nav>

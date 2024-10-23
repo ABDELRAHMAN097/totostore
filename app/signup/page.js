@@ -29,7 +29,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="h-100vh m-auto block max-w-sm rounded-lg bg-slate-500 p-6 shadow-4 dark:bg-surface-dark">
+    <div className="min-h-[43.8vh] m-auto block max-w-sm rounded-lg bg-slate-500 p-6 shadow-4 dark:bg-surface-dark my-3">
       <form className="relative" onSubmit={handleSignup}>
         <h1 className="text-white mb-6">Create Account Now</h1>
         <input

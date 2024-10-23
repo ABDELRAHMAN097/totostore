@@ -107,73 +107,94 @@ export default function Page() {
   };
 
   return (
-    <div className="control">
-      <div>
-        <input
-          className="text-black"
-          type="text"
-          placeholder="اسم المنتج"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          className="text-black"
-          type="number"
-          placeholder="سعر المنتج"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-        />
-        <textarea
-          className="text-black textarea"
-          placeholder="وصف المنتج"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <select
-          className="text-black"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option value="Men">رجال</option>
-          <option value="Women">نساء</option>
-        </select>
-        <input type="file" onChange={handleFileChange} />
-        <button onClick={handleAddProduct}>إضافة منتج</button>
+    <div className="container mx-auto p-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Display Stats */}
+      <div className="bg-white p-4 rounded-lg shadow-md">
+        <p className="text-2xl font-bold">322</p>
+        <p className="text-gray-500">Completed</p>
       </div>
-
-      <div>
-        <h2>المستخدم إلى الإدارة</h2>
-        <Link href="/isAdmin">كل المدراء</Link>
+      <div className="bg-white p-4 rounded-lg shadow-md">
+        <p className="text-2xl font-bold">208</p>
+        <p className="text-gray-500">Active</p>
       </div>
-
-      <div>
-        <h1>لوحة تحكم المنتجات</h1>
-        {products.length === 0 ? (
-          <p>لا توجد منتجات</p>
-        ) : (
-          <div className="products">
-            {products.map((product) => (
-              <div className="card" key={product.id}>
-                <img
-                  className="product-img"
-                  src={product.imageUrl}
-                  alt={product.name}
-                  width="200"
-                />
-                <div className="card-body">
-                  <h2>{product.name}</h2>
-                  <p>السعر: ${product.price}</p>
-                  <p>الوصف: {product.description}</p>
-                  <p>الفئة: {product.category}</p>
-                  <button onClick={() => handleDeleteProduct(product.id)}>
-                    حذف
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+      <div className="bg-white p-4 rounded-lg shadow-md">
+        <p className="text-2xl font-bold">85</p>
+        <p className="text-gray-500">Review</p>
+      </div>
+      <div className="bg-white p-4 rounded-lg shadow-md">
+        <p className="text-2xl font-bold">48</p>
+        <p className="text-gray-500">Approval</p>
       </div>
     </div>
+  
+    {/* Form Section */}
+    <div className="my-8">
+      <input
+        className="block w-full border border-gray-300 p-2 rounded-lg mb-4"
+        type="text"
+        placeholder="Product Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <input
+        className="block w-full border border-gray-300 p-2 rounded-lg mb-4"
+        type="number"
+        placeholder="Price"
+        value={price}
+        onChange={(e) => setPrice(e.target.value)}
+      />
+      <textarea
+        className="block w-full border border-gray-300 p-2 rounded-lg mb-4"
+        placeholder="Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
+      <select
+        className="block w-full border border-gray-300 p-2 rounded-lg mb-4"
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
+      >
+        <option value="Men">Men</option>
+        <option value="Women">Women</option>
+        <option value="Accessories">Accessories</option>
+      </select>
+      <input type="file" className="block w-full mb-4" onChange={handleFileChange} />
+      <button
+        className="block w-full p-2 bg-blue-600 text-white rounded-lg"
+        onClick={handleAddProduct}
+      >
+        Add Product
+      </button>
+    </div>
+  
+    {/* Products Section */}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {products.length === 0 ? (
+        <p>No Products Available</p>
+      ) : (
+        products.map((product) => (
+          <div key={product.id} className="bg-white p-4 rounded-lg shadow-md">
+            <img
+              src={product.imageUrl}
+              alt={product.name}
+              className="h-48 w-full object-cover rounded-lg mb-4"
+            />
+            <h2 className="text-xl font-bold">{product.name}</h2>
+            <p className="text-gray-500">Price: ${product.price}</p>
+            <p className="text-gray-500">Description: {product.description}</p>
+            <p className="text-gray-500">Category: {product.category}</p>
+            <button
+              className="mt-4 w-full p-2 bg-red-600 text-white rounded-lg"
+              onClick={() => handleDeleteProduct(product.id)}
+            >
+              Delete
+            </button>
+          </div>
+        ))
+      )}
+    </div>
+  </div>
+  
   );
 }

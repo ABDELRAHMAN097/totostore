@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "./firebase";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../firebase";
 import { BarLoader } from "react-spinners";
 import { IoMdCloseCircle } from "react-icons/io";
 
-const page = () => {
+export default function AccessoriesPage() {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -15,9 +15,10 @@ const page = () => {
 
   useEffect(() => {
     setLoading(true);
-    const fetchProducts = async () => {
+    const fetchAccessories = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "products"));
+        const q = query(collection(db, "products"), where("category", "==", "Accessories"));
+        const querySnapshot = await getDocs(q);
         const productsData = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
@@ -25,10 +26,11 @@ const page = () => {
         setLoading(false);
         setProducts(productsData);
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error("Error fetching men's products:", error);
+        setLoading(false);
       }
     };
-    fetchProducts();
+    fetchAccessories();
   }, []);
 
   const openModal = (description, imageUrl, Name) => {
@@ -59,11 +61,11 @@ const page = () => {
 
       <div
         className="relative w-full h-[60vh] bg-cover bg-center"
-        style={{ backgroundImage: "url('/image/cover.png')" }}
+        style={{ backgroundImage: "url('/image/Accessories cover.png')" }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white">
           <h1 className="text-4xl font-bold mb-4">Welcome to Toto Store</h1>
-          <h2 className="text-2xl mb-6">The best products at the best prices</h2>
+          <h2 className="text-2xl mb-6">Accessories collection</h2>
           <button
             onClick={scrollToProducts}
             className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded"
@@ -73,10 +75,11 @@ const page = () => {
         </div>
       </div>
 
-      <h3 id="products-section" className="ml-5 my-5 text-gray-500">Trendy clothes</h3>
+      <h3 id="products-section" className="ml-5 my-5 text-gray-500">Accessories</h3>
+      
       <div>
         {products.length === 0 ? (
-          <p className="text-center text-gray-500">No products found ... !</p>
+          <p className="text-center text-gray-500">No men's products found ... !</p>
         ) : (
           <div className="products px-2 md:p-0">
             {products.map((product) => (
@@ -92,7 +95,6 @@ const page = () => {
                 <div className="text-center p-2">
                   <h2 className="text-surface dark:text-black">{product.name}</h2>
                   <p className="text-surface dark:text-black">Price: ${product.price}</p>
-                  <p className="text-surface dark:text-black">Category: {product.category}</p>
                   <button
                     className="bg-blue-500 text-white rounded p-1 mt-2"
                     onClick={() =>
@@ -133,6 +135,4 @@ const page = () => {
       )}
     </div>
   );
-};
-
-export default page;
+}
