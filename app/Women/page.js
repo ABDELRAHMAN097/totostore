@@ -96,7 +96,7 @@ export default function WomenProductsPage() {
                   <h2 className="text-surface dark:text-black">{product.name}</h2>
                   <p className="text-surface dark:text-black">Price: ${product.price}</p>
                   <button
-                    className="bg-blue-500 text-white rounded p-1 mt-2"
+                    className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1 mt-2"
                     onClick={() =>
                       openModal(
                         product.description,
@@ -105,7 +105,7 @@ export default function WomenProductsPage() {
                       )
                     }
                   >
-                    Description
+                    Details
                   </button>
                 </div>
               </div>
@@ -125,7 +125,7 @@ export default function WomenProductsPage() {
             <h2 className="text-lg font-bold mb-2">{currentName}</h2>
             <p>{currentDescription}</p>
             <button
-              className="text-red-500 text-3xl rounded p-1 mt-4"
+              className="text-pink-500 hover:text-pink-700 text-3xl rounded p-1 mt-4"
               onClick={closeModal}
             >
               <IoMdCloseCircle />

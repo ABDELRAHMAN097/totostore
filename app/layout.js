@@ -29,6 +29,9 @@ export default function RootLayout({ children }) {
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
+  const closeDropdown = () => {
+    setShowDropdown(false)
+  }
 
   return (
     <html lang="en">
@@ -75,9 +78,9 @@ export default function RootLayout({ children }) {
         
         {showDropdown && (
           <div className="absolute z-30 left-0 mt-2 w-32 bg-white border rounded-lg shadow-lg">
-            <Link className="block px-4 py-2 text-gray-800 hover:bg-gray-200 rounded-lg" href="/Men">Men</Link>
-            <Link className="block px-4 py-2 text-gray-800 hover:bg-gray-200 rounded-lg" href="/Women">Women</Link>
-            <Link className="block px-4 py-2 text-gray-800 hover:bg-gray-200 rounded-lg" href="/Accessories">Accessories</Link>
+            <Link className="block px-4 py-2 text-gray-800 hover:bg-gray-200 rounded-lg" href="/Men" onClick={closeDropdown}>Men</Link>
+            <Link className="block px-4 py-2 text-gray-800 hover:bg-gray-200 rounded-lg" href="/Women" onClick={closeDropdown}>Women</Link>
+            <Link className="block px-4 py-2 text-gray-800 hover:bg-gray-200 rounded-lg" href="/Accessories" onClick={closeDropdown}>Accessories</Link>
           </div>
         )}
       </div>
@@ -90,7 +93,7 @@ export default function RootLayout({ children }) {
         {/* footer */}
        
         <footer
-          className="flex flex-col items-center bg-[#0a4275] text-center text-white">
+          className="flex flex-col items-center bg-gray-500 text-center text-white">
           <div className="container p-6">
             <div className="">
               <div className="flex items-center justify-center">
