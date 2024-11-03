@@ -4,6 +4,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { BarLoader } from "react-spinners";
 import { IoMdCloseCircle } from "react-icons/io";
+import { useCart } from "../CartContext/CartContext.jsx";
 
 export default function WomenProductsPage() {
   const [loading, setLoading] = useState(false);
@@ -12,6 +13,8 @@ export default function WomenProductsPage() {
   const [currentDescription, setCurrentDescription] = useState("");
   const [CurrentImage, setCurrentImage] = useState("");
   const [currentName, setcurrentName] = useState("");
+  
+  const { addToCart, cartItems } = useCart();
 
   useEffect(() => {
     setLoading(true);
@@ -51,6 +54,13 @@ export default function WomenProductsPage() {
     }
   };
 
+    // Add product to shopping cart
+  const handleAddToCart = (product) => {
+    addToCart(product);
+    localStorage.setItem("cartItems", JSON.stringify([...cartItems, product]));
+    alert(`تم إضافة المنتج ${product.name} إلى السلة بنجاح!`);
+  };
+
   return (
     <div className="min-h-[44.5vh]">
       {loading && (
@@ -75,11 +85,11 @@ export default function WomenProductsPage() {
         </div>
       </div>
 
-      <h3 id="products-section" className="ml-5 my-5 text-gray-500">Men's Clothes</h3>
+      <h3 id="products-section" className="ml-5 my-5 text-gray-500">Women's Clothes</h3>
       
       <div>
         {products.length === 0 ? (
-          <p className="text-center text-gray-500">No men's products found ... !</p>
+          <p className="text-center text-gray-500">No women's products found ... !</p>
         ) : (
           <div className="products px-2 md:p-0">
             {products.map((product) => (
@@ -95,8 +105,9 @@ export default function WomenProductsPage() {
                 <div className="text-center p-2">
                   <h2 className="text-surface dark:text-black">{product.name}</h2>
                   <p className="text-surface dark:text-black">Price: ${product.price}</p>
+                  <div className="flex justify-center gap-1 mt-2">
                   <button
-                    className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1 mt-2"
+                    className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1"
                     onClick={() =>
                       openModal(
                         product.description,
@@ -107,6 +118,8 @@ export default function WomenProductsPage() {
                   >
                     Details
                   </button>
+                  <button className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1" onClick={() => handleAddToCart(product)}>Add</button>
+                  </div>
                 </div>
               </div>
             ))}

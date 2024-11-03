@@ -95,8 +95,9 @@ export default function AccessoriesPage() {
                 <div className="text-center p-2">
                   <h2 className="text-surface dark:text-black">{product.name}</h2>
                   <p className="text-surface dark:text-black">Price: ${product.price}</p>
+                  <div className="flex justify-center gap-1 mt-2">
                   <button
-                    className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1 mt-2"
+                    className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1"
                     onClick={() =>
                       openModal(
                         product.description,
@@ -107,6 +108,8 @@ export default function AccessoriesPage() {
                   >
                     Details
                   </button>
+                  <button className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1">Add</button>
+                  </div>
                 </div>
               </div>
             ))}

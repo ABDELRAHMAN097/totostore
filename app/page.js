@@ -4,6 +4,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "./firebase";
 import { BarLoader } from "react-spinners";
 import { IoMdCloseCircle } from "react-icons/io";
+import { useCart } from "../app/CartContext/CartContext";
 
 const page = () => {
   const [loading, setLoading] = useState(false);
@@ -11,7 +12,11 @@ const page = () => {
   const [showModal, setShowModal] = useState(false);
   const [currentDescription, setCurrentDescription] = useState("");
   const [CurrentImage, setCurrentImage] = useState("");
+  const [currentcategory, setcurrentcategory] = useState("");
   const [currentName, setcurrentName] = useState("");
+
+  const { addToCart, cartItems } = useCart();
+
 
   useEffect(() => {
     setLoading(true);
@@ -31,9 +36,10 @@ const page = () => {
     fetchProducts();
   }, []);
 
-  const openModal = (description, imageUrl, Name) => {
+  const openModal = (description, imageUrl, category, Name) => {
     setCurrentDescription(description);
     setCurrentImage(imageUrl);
+    setcurrentcategory(category);
     setcurrentName(Name);
     setShowModal(true);
   };
@@ -47,6 +53,12 @@ const page = () => {
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
     }
+  };
+  // Add product to shopping cart
+  const handleAddToCart = (product) => {
+    addToCart(product);
+    localStorage.setItem("cartItems", JSON.stringify([...cartItems, product]));
+    alert(`تم إضافة المنتج ${product.name} إلى السلة بنجاح!`);
   };
 
   return (
@@ -66,7 +78,7 @@ const page = () => {
           <h2 className="text-2xl mb-6">The best products at the best prices</h2>
           <button
             onClick={scrollToProducts}
-            className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded"
+            className="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded"
           >
             Shop now
           </button>
@@ -92,19 +104,22 @@ const page = () => {
                 <div className="text-center p-2">
                   <h2 className="text-surface dark:text-black">{product.name}</h2>
                   <p className="text-surface dark:text-black">Price: ${product.price}</p>
-                  <p className="text-surface dark:text-black">Category: {product.category}</p>
+                  <div className="flex gap-1 mt-2 text-center justify-center">
                   <button
-                    className="bg-blue-500 text-white rounded p-1 mt-2"
+                    className="bg-blue-500 text-white rounded p-1"
                     onClick={() =>
                       openModal(
                         product.description,
                         product.imageUrl,
-                        product.name
+                        product.name,
+                        product.category
                       )
                     }
                   >
-                    Description
+                    Details
                   </button>
+                  <button className="bg-blue-500 text-white rounded p-1" onClick={() => handleAddToCart(product)}>Add</button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -121,6 +136,7 @@ const page = () => {
               alt={CurrentImage}
             />
             <h2 className="text-lg font-bold mb-2">{currentName}</h2>
+            <p>{currentcategory}</p>
             <p>{currentDescription}</p>
             <button
               className="text-red-500 text-3xl rounded p-1 mt-4"

@@ -12,6 +12,8 @@ import { FaInstagram } from "react-icons/fa";
 import { FaTiktok } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { FaHome } from "react-icons/fa";
+import { CartProvider } from "../app/CartContext/CartContext.jsx";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,7 +38,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-
+      <CartProvider> 
         {/* head */}
 
         <div className="head">
@@ -62,15 +64,19 @@ export default function RootLayout({ children }) {
             <Link className="link" href="/signup">
               <IoPersonOutline />
             </Link>
+            <Link className="link" href="/Wishlist">
             <FaRegHeart />
+            </Link>
+            <Link className="link" href="/Shoping">
             <IoBagHandleOutline />
+            </Link>
           </div>
         </header>
 
         {/* nav */}
 
         <nav className="nav">
-          <Link className="link" href="/">Home</Link>
+          <Link className="link" href="/"><FaHome className="text-2xl" /></Link>
           <div className="relative inline-block">
         <button className="link flex items-center" onClick={toggleDropdown}>
           Categories <IoMdArrowDropdown className="text-2xl" />
@@ -112,10 +118,11 @@ export default function RootLayout({ children }) {
           </div>
 
           <div className="w-full bg-black/20 p-4 text-center cursor-pointer">
-            © 2023 Copyright :
+            © 2024 Copyright :
             <a className="cursor-pointer" href="https://tw-elements.com/"> totostore</a>
           </div>
         </footer>
+        </CartProvider>
       </body>
     </html>
   );
