@@ -14,6 +14,8 @@ import { FaTiktok } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { FaHome } from "react-icons/fa";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { CartProvider } from "../app/CartContext/CartContext.jsx";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -40,6 +42,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
       <CartProvider> 
+
+      {/* ToastContainer */}
+      
+      <ToastContainer position="top-right" autoClose={3000} />
+
         {/* head */}
 
         <div className="head">
