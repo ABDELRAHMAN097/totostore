@@ -4,6 +4,8 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { BarLoader } from "react-spinners";
 import { IoMdCloseCircle } from "react-icons/io";
+import { useCart } from "../CartContext/CartContext.jsx";
+
 
 export default function MenProductsPage() {
   const [loading, setLoading] = useState(false);
@@ -12,6 +14,8 @@ export default function MenProductsPage() {
   const [currentDescription, setCurrentDescription] = useState("");
   const [CurrentImage, setCurrentImage] = useState("");
   const [currentName, setcurrentName] = useState("");
+
+  const { addToCart, cartItems } = useCart();
 
   useEffect(() => {
     setLoading(true);
@@ -52,6 +56,13 @@ export default function MenProductsPage() {
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+   // Add product to shopping cart
+   const handleAddToCart = (product) => {
+    addToCart(product);
+    localStorage.setItem("cartItems", JSON.stringify([...cartItems, product]));
+    alert(`تم إضافة المنتج ${product.name} إلى السلة بنجاح!`);
   };
 
   return (
@@ -119,7 +130,7 @@ export default function MenProductsPage() {
                     >
                       Details
                     </button>
-                    <button className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1">
+                    <button className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1" onClick={() => handleAddToCart(product)}>
                       Add
                     </button>
                   </div>

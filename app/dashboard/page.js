@@ -4,6 +4,7 @@ import { db, storage } from "../firebase";
 import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Link from "next/link";
+import { RiDeleteBin5Fill } from "react-icons/ri";
 
 export default function Page() {
   const [products, setProducts] = useState([]);
@@ -185,10 +186,10 @@ export default function Page() {
             <p className="text-gray-500">Description: {product.description}</p>
             <p className="text-gray-500">Category: {product.category}</p>
             <button
-              className="mt-4 w-full p-2 bg-red-600 text-white rounded-lg"
+              className="mt-4 w-full text-center p-2 bg-red-500 text-white rounded-lg"
               onClick={() => handleDeleteProduct(product.id)}
             >
-              Delete
+              <RiDeleteBin5Fill className="w-full text-center"/>
             </button>
           </div>
         ))

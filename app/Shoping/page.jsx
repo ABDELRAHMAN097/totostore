@@ -1,57 +1,86 @@
 "use client";
-import React from 'react';
+import React, { useEffect , useState } from 'react';
 import Link from "next/link";
+import { BarLoader } from "react-spinners";
 import { useCart } from '../CartContext/CartContext';
 
 export default function ShoppingCart() {
+  // loading
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false); 
+    }, 1000); 
+
+    return () => clearTimeout(timer);
+  }, []);
+
+
   const { cartItems, removeFromCart, increaseQuantity, decreaseQuantity } = useCart();
 
-  // حساب التكلفة الكلية لكل المنتجات
+  // Calculate the total cost of all products
   const totalCost = cartItems.reduce((total, product) => total + parseFloat(product.price) * product.quantity, 0);
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-4 sm:p-8">
+      {loading && (
+        <div className="loading-overlay">
+          <BarLoader color={"#d60096"} loading={loading} size={350} />
+        </div>
+      )}
+      <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-4 sm:p-8 my-3">
         <h1 className="text-2xl font-bold mb-6 text-center sm:text-left">Shopping Cart</h1>
         
         <div className="flex flex-col lg:flex-row">
-          {/* قسم المنتجات */}
+          {/*  Invoice */}
           <div className="w-full lg:w-2/3 pr-0 lg:pr-8 mb-8 lg:mb-0">
-            <div className="flex justify-between border-b pb-4 mb-4">
-              <span className="text-lg font-semibold">{cartItems.length} Items</span>
-            </div>
+  <div className="flex justify-between border-b pb-4 mb-4">
+    <span className="text-lg font-semibold">{cartItems.length} Items</span>
+  </div>
 
-            {/* عرض المنتجات */}
-            <div className="space-y-4">
-              {cartItems.map((product) => (
-                <div
-                  className="flex flex-row gap-2 sm:gap-7 items-center border-b pb-2"
-                  key={product.id}
-                >
-                  <div className="flex items-center mb-4 sm:mb-0">
-                    <img src={product.imageUrl} alt={product.name} className="w-16 h-16 mr-4" />
-                    <div>
-                      <p className="font-semibold">{product.name}</p>
-                      <span className="text-gray-500 text-sm">{product.category}</span>
-                      <p
-                        className="text-blue-500 cursor-pointer text-sm mt-1"
-                        onClick={() => removeFromCart(product.id)}
-                      >
-                        Remove
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-1 mb-4 sm:mb-0">
-                   <button className="px-2 py-1 border" onClick={() => decreaseQuantity(product.id)}>-</button>
-                   <span>{product.quantity}</span>
-                   <button className="px-2 py-1 border" onClick={() => increaseQuantity(product.id)}>+</button>
-                 </div>
-                  <span className="text-gray-500">£{product.price}</span>
-                </div>
-              ))}
-            </div>
+  {/* products */}
+  <div className="space-y-6">
+    {cartItems.map((product) => (
+      <div
+        className="flex items-center justify-between sm:gap-6 border-b pb-4"
+        key={product.id}
+      >
+        {/*   photos & info  */}
+        <div className="flex items-center space-x-4 w-1/2">
+          <img src={product.imageUrl} alt={product.name} className="w-20 h-20" />
+          <div className="text-left">
+            <p className="font-semibold">{product.name}</p>
+            <span className="text-gray-500 text-sm">{product.category}</span>
+            <p
+              className="text-blue-500 cursor-pointer text-sm mt-1"
+              onClick={() => removeFromCart(product.id)}
+            >
+              Remove
+            </p>
           </div>
+        </div>
 
-          {/* قسم ملخص الطلب */}
+        {/* buttons */}
+        <div className="flex items-center gap-2 w-1/4 justify-center">
+          <button className="w-8 h-8 flex items-center justify-center border rounded" onClick={() => decreaseQuantity(product.id)}>
+            -
+          </button>
+          <span className="font-semibold w-4 text-center">{product.quantity}</span>
+          <button className="w-8 h-8 flex items-center justify-center border rounded" onClick={() => increaseQuantity(product.id)}>
+            +
+          </button>
+        </div>
+
+        {/* price */}
+        <span className="w-1/4 text-right text-gray-600 font-semibold">£{product.price}</span>
+      </div>
+    ))}
+  </div>
+</div>
+
+
+
+          {/* Order summary section */}
           <div className="w-full lg:w-1/3 bg-gray-50 p-6 rounded-lg">
             <h2 className="text-xl font-semibold mb-4 text-center lg:text-left">Order Summary</h2>
             <div className="flex justify-between mb-2">

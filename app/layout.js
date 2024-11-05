@@ -2,7 +2,8 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
-import { CgAdidas } from "react-icons/cg";
+import Image from 'next/image';
+import logo from '../public/image/batman.png'
 import { FaSearch } from "react-icons/fa";
 import { IoPersonOutline } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
@@ -55,7 +56,9 @@ export default function RootLayout({ children }) {
         {/* header */}
 
         <header className="header">
-          <div className="logo"><CgAdidas /></div>
+          <a href="/" className="w-16 h-16 mr-3 sm:mr-3 md:mr-0 flex items-center justify-center">
+            <Image src={logo} alt="logo" className="w-full flex items-center justify-center"/>
+          </a>
           <div className="search">
             <input className="search-info" type="text"/>
             <FaSearch className="search-icon" />
@@ -117,9 +120,11 @@ export default function RootLayout({ children }) {
             </div>
           </div>
 
+          
+
           <div className="w-full bg-black/20 p-4 text-center cursor-pointer">
-            © 2024 Copyright :
-            <a className="cursor-pointer" href="https://tw-elements.com/"> totostore</a>
+             Developed By <a className="text-pink-500" href="https://github.com/ABDELRAHMAN097">Abdelrahman</a>  All Copy Rights Reserved @2024 :
+            <a className="cursor-pointer text-pink-500"> totostore</a>
           </div>
         </footer>
         </CartProvider>
