@@ -6,6 +6,7 @@ import { BarLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useCart } from "../app/CartContext/CartContext";
+import { FaRegHeart } from "react-icons/fa";
 
 const page = () => {
   const [loading, setLoading] = useState(false);
@@ -17,7 +18,11 @@ const page = () => {
   const [currentName, setcurrentName] = useState("");
 
   const { addToCart, cartItems } = useCart();
+  const { addToWishlist } = useCart();
 
+  const handleAddToWishlist = (product) => {
+    addToWishlist(product);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -55,14 +60,15 @@ const page = () => {
       section.scrollIntoView({ behavior: "smooth" });
     }
   };
+  
   // Add product to shopping cart
   const handleAddToCart = (product) => {
     addToCart(product);
     localStorage.setItem("cartItems", JSON.stringify([...cartItems, product]));
     toast.success(
       <div>
-        <span className="text-green-500">{product.name}</span> has been added
-        to your cart!
+        <span className="text-green-500">{product.name}</span> has been added to
+        your cart!
       </div>,
       {
         position: "top-right",
@@ -70,6 +76,7 @@ const page = () => {
       }
     );
   };
+  
 
   return (
     <div className="min-h-[44.5vh]">
@@ -128,6 +135,14 @@ const page = () => {
                   >
                     Details
                   </button>
+
+                  <button
+                      className="bg-blue-500 text-white rounded p-1"
+                      onClick={() => handleAddToWishlist(product)}
+                    >
+                      <FaRegHeart />
+                    </button>
+
                   <button className="bg-blue-500 text-white rounded p-1" onClick={() => handleAddToCart(product)}>Add</button>
                   </div>
                 </div>

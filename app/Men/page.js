@@ -6,7 +6,7 @@ import { BarLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useCart } from "../CartContext/CartContext.jsx";
-
+import { FaRegHeart } from "react-icons/fa";
 
 export default function MenProductsPage() {
   const [loading, setLoading] = useState(false);
@@ -17,6 +17,11 @@ export default function MenProductsPage() {
   const [currentName, setcurrentName] = useState("");
 
   const { addToCart, cartItems } = useCart();
+  const { addToWishlist } = useCart();
+
+  const handleAddToWishlist = (product) => {
+    addToWishlist(product);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -59,14 +64,14 @@ export default function MenProductsPage() {
     }
   };
 
-   // Add product to shopping cart
-   const handleAddToCart = (product) => {
+  // Add product to shopping cart
+  const handleAddToCart = (product) => {
     addToCart(product);
     localStorage.setItem("cartItems", JSON.stringify([...cartItems, product]));
     toast.success(
       <div>
-        <span className="text-green-500">{product.name}</span> has been added
-        to your cart!
+        <span className="text-green-500">{product.name}</span> has been added to
+        your cart!
       </div>,
       {
         position: "top-right",
@@ -140,7 +145,18 @@ export default function MenProductsPage() {
                     >
                       Details
                     </button>
-                    <button className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1" onClick={() => handleAddToCart(product)}>
+
+                    <button
+                      className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1"
+                      onClick={() => handleAddToWishlist(product)}
+                    >
+                      <FaRegHeart />
+                    </button>
+
+                    <button
+                      className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1"
+                      onClick={() => handleAddToCart(product)}
+                    >
                       Add
                     </button>
                   </div>

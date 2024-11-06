@@ -6,6 +6,7 @@ import { BarLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useCart } from "../CartContext/CartContext.jsx";
+import { FaRegHeart } from "react-icons/fa";
 
 export default function AccessoriesPage() {
   const [loading, setLoading] = useState(false);
@@ -16,12 +17,20 @@ export default function AccessoriesPage() {
   const [currentName, setcurrentName] = useState("");
 
   const { addToCart, cartItems } = useCart();
+  const { addToWishlist } = useCart();
+
+  const handleAddToWishlist = (product) => {
+    addToWishlist(product);
+  };
 
   useEffect(() => {
     setLoading(true);
     const fetchAccessories = async () => {
       try {
-        const q = query(collection(db, "products"), where("category", "==", "Accessories"));
+        const q = query(
+          collection(db, "products"),
+          where("category", "==", "Accessories")
+        );
         const querySnapshot = await getDocs(q);
         const productsData = querySnapshot.docs.map((doc) => ({
           id: doc.id,
@@ -55,14 +64,14 @@ export default function AccessoriesPage() {
     }
   };
 
-   // Add product to shopping cart
-   const handleAddToCart = (product) => {
+  // Add product to shopping cart
+  const handleAddToCart = (product) => {
     addToCart(product);
     localStorage.setItem("cartItems", JSON.stringify([...cartItems, product]));
     toast.success(
       <div>
-        <span className="text-green-500">{product.name}</span> has been added
-        to your cart!
+        <span className="text-green-500">{product.name}</span> has been added to
+        your cart!
       </div>,
       {
         position: "top-right",
@@ -95,11 +104,15 @@ export default function AccessoriesPage() {
         </div>
       </div>
 
-      <h3 id="products-section" className="ml-5 my-5 text-gray-500">Accessories</h3>
-      
+      <h3 id="products-section" className="ml-5 my-5 text-gray-500">
+        Accessories
+      </h3>
+
       <div>
         {products.length === 0 ? (
-          <p className="text-center text-gray-500">No men's products found ... !</p>
+          <p className="text-center text-gray-500">
+            No men's products found ... !
+          </p>
         ) : (
           <div className="products px-2 md:p-0">
             {products.map((product) => (
@@ -113,22 +126,39 @@ export default function AccessoriesPage() {
                   alt={product.name}
                 />
                 <div className="text-center p-2">
-                  <h2 className="text-surface dark:text-black">{product.name}</h2>
-                  <p className="text-surface dark:text-black">Price: ${product.price}</p>
+                  <h2 className="text-surface dark:text-black">
+                    {product.name}
+                  </h2>
+                  <p className="text-surface dark:text-black">
+                    Price: ${product.price}
+                  </p>
                   <div className="flex justify-center gap-1 mt-2">
-                  <button
-                    className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1"
-                    onClick={() =>
-                      openModal(
-                        product.description,
-                        product.imageUrl,
-                        product.name
-                      )
-                    }
-                  >
-                    Details
-                  </button>
-                  <button className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1" onClick={() => handleAddToCart(product)}>Add</button>
+                    <button
+                      className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1"
+                      onClick={() =>
+                        openModal(
+                          product.description,
+                          product.imageUrl,
+                          product.name
+                        )
+                      }
+                    >
+                      Details
+                    </button>
+
+                    <button
+                      className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1"
+                      onClick={() => handleAddToWishlist(product)}
+                    >
+                      <FaRegHeart />
+                    </button>
+
+                    <button
+                      className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1"
+                      onClick={() => handleAddToCart(product)}
+                    >
+                      Add
+                    </button>
                   </div>
                 </div>
               </div>

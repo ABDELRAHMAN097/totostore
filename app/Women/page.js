@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -18,6 +18,10 @@ export default function WomenProductsPage() {
   const [currentName, setcurrentName] = useState("");
 
   const { addToCart, cartItems } = useCart();
+  const { addToWishlist } = useCart();
+  const handleAddToWishlist = (product) => {
+    addToWishlist(product);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -66,8 +70,8 @@ export default function WomenProductsPage() {
     localStorage.setItem("cartItems", JSON.stringify([...cartItems, product]));
     toast.success(
       <div>
-        <span className="text-green-500">{product.name}</span> has been added
-        to your cart!
+        <span className="text-green-500">{product.name}</span> has been added to
+        your cart!
       </div>,
       {
         position: "top-right",
@@ -144,11 +148,11 @@ export default function WomenProductsPage() {
 
                     <button
                       className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1"
-                     
+                      onClick={() => handleAddToWishlist(product)}
                     >
                       <FaRegHeart />
                     </button>
-                    
+
                     <button
                       className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1"
                       onClick={() => handleAddToCart(product)}
