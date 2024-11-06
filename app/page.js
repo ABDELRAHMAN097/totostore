@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "./firebase";
 import { BarLoader } from "react-spinners";
+import { toast } from "react-toastify";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useCart } from "../app/CartContext/CartContext";
 
@@ -58,7 +59,16 @@ const page = () => {
   const handleAddToCart = (product) => {
     addToCart(product);
     localStorage.setItem("cartItems", JSON.stringify([...cartItems, product]));
-    alert(`تم إضافة المنتج ${product.name} إلى السلة بنجاح!`);
+    toast.success(
+      <div>
+        <span className="text-green-500">{product.name}</span> has been added
+        to your cart!
+      </div>,
+      {
+        position: "top-right",
+        autoClose: 3000,
+      }
+    );
   };
 
   return (

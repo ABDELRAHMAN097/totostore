@@ -1,3 +1,7 @@
+
+
+
+"use client"
 import { createContext, useContext, useState, useEffect } from 'react';
 import { toast } from "react-toastify";
 
@@ -29,10 +33,14 @@ export const CartProvider = ({ children }) => {
   const addToCart = (product) => {
     setCartItems((prevItems) => [...prevItems, { ...product, quantity: 1 }]);
   };
+  // handleAddToWishlist
+  const handleAddToWishlist = (product) => {
+    setCartItems((prevItems) => [...prevItems, { ...product, quantity: 1 }]);
+  };
 
   const removeFromCart = (id) => {
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
-    toast.success(
+    toast.error(
       <div>
         removed one item
       </div>,
@@ -60,7 +68,7 @@ export const CartProvider = ({ children }) => {
   };
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, increaseQuantity, decreaseQuantity }}>
+    <CartContext.Provider value={{ cartItems, addToCart, handleAddToWishlist, removeFromCart, increaseQuantity, decreaseQuantity }}>
       {children}
     </CartContext.Provider>
   );

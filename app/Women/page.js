@@ -1,10 +1,12 @@
-"use client";
+"use client"
+
 import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { BarLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import { IoMdCloseCircle } from "react-icons/io";
+import { FaRegHeart } from "react-icons/fa";
 import { useCart } from "../CartContext/CartContext.jsx";
 
 export default function WomenProductsPage() {
@@ -139,6 +141,14 @@ export default function WomenProductsPage() {
                     >
                       Details
                     </button>
+
+                    <button
+                      className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1"
+                     
+                    >
+                      <FaRegHeart />
+                    </button>
+                    
                     <button
                       className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1"
                       onClick={() => handleAddToCart(product)}
