@@ -53,7 +53,7 @@ export default function Signin() {
   };
 
   return (
-    <div className="relative flex items-center justify-center min-h-[450px] bg-gradient-to-b from-gray-900 to-gray-800 overflow-hidden">
+    <div className="relative flex items-center justify-center min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 overflow-hidden">
       <div className="absolute top-0 left-0 w-96 h-96 bg-pink-700 rounded-full opacity-30 animate-[pulse_5s_ease-in-out_infinite]" />
       <div className="absolute top-10 right-0 w-72 h-72 bg-pink-300 rounded-full opacity-20 animate-[bounce_18s_ease-in-out_infinite]" />
       <div className="absolute bottom-0 left-20 w-64 h-64 bg-pink-500 rounded-full opacity-25 animate-[spin_2s_linear_infinite]" />
