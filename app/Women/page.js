@@ -117,11 +117,11 @@ export default function WomenProductsPage() {
           <div className="products px-2 md:p-0">
             {products.map((product) => (
               <div
-                className="border my-2 mx-1 w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[280px]"
+                className="border my-2 mx-1 w-[300px] md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark  min-h-[363px] md:min-h-[280px]"
                 key={product.id}
               >
                 <img
-                  className="rounded-t-lg w-full h-48 object-cover"
+                  className="rounded-t-lg w-full h-[250px] md:h-48 object-cover"
                   src={product.imageUrl}
                   alt={product.name}
                 />

@@ -42,24 +42,16 @@ export default function Page() {
   };
 
   return (
-    <div className="container mx-auto p-2">
-      <h1 className="text-3xl font-semibold text-center">Wishlist</h1>
-
-      {/* <div className="mt-4 max-w-lg mx-auto">
-        <input
-          type="text"
-          placeholder="search in wishlist ..."
-          className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div> */}
+    <div className="container min-h-[44.5vh] mx-auto p-2">
+      <h1 className="text-3xl my-5 font-semibold text-center">Wishlist</h1>
       <div className="products px-2 md:p-0">
         {wishlistItems.map((product) => (
           <div
-            className="border my-2 mx-1 w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[280px]"
+            className="border my-2 mx-1 w-[300px] md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[363px] md:min-h-[280px]"
             key={product.id}
           >
             <img
-              className="rounded-t-lg w-full h-48 object-cover"
+              className="rounded-t-lg w-full h-[250px] md:h-48 object-cover"
               src={product.imageUrl}
               alt={product.name}
             />
@@ -82,7 +74,7 @@ export default function Page() {
                   Details
                 </button>
                 <button
-                  className="text-pink-500 hover:text-pink-700 font-semibold transition-colors duration-300"
+                  className="bg-pink-500 text-white rounded p-1 hover:bg-pink-700 font-semibold transition-colors duration-300"
                   onClick={() => removeFromWishlist(product.id)}
                 >
                   <RiDeleteBin5Fill className="w-full text-center text-3xl" />

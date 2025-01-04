@@ -109,7 +109,6 @@ export default function RootLayout({ children }) {
         )}
       </div>
            {/* {admin && <Link className="link" href="/dashboard">Dashboard</Link>} */}
-           <Link className="link" href="/dashboard">Dashboard</Link>
         </nav>
 
         {children}

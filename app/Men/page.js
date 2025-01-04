@@ -88,7 +88,7 @@ export default function MenProductsPage() {
         </div>
       )}
 
-      <div
+      {/* <div
         className="relative w-full h-[60vh] bg-cover bg-center"
         style={{ backgroundImage: "url('/image/men cover.png')" }}
       >
@@ -102,7 +102,30 @@ export default function MenProductsPage() {
             Shop now
           </button>
         </div>
+      </div> */}
+    
+    <div className="relative w-full h-[60vh] md:h-[70vh] lg:h-[80vh] overflow-hidden">
+        <img
+          src="/image/men cover.png"
+          alt="Men Cover"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white px-4">
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-4 text-center max-w-[90%]">
+            Welcome to Toto Store
+          </h1>
+          <h2 className="text-lg md:text-2xl lg:text-3xl mb-4 md:mb-6 text-center max-w-[90%]">
+            Men's collection
+          </h2>
+          <button
+            onClick={scrollToProducts}
+            className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-6 rounded text-sm md:text-base lg:text-lg transition-all"
+          >
+            Shop now
+          </button>
+        </div>
       </div>
+
 
       <h3 id="products-section" className="ml-5 my-5 text-gray-500">
         Men's Clothes
@@ -117,11 +140,11 @@ export default function MenProductsPage() {
           <div className="products px-2 md:p-0">
             {products.map((product) => (
               <div
-                className="border my-2 mx-1 w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[280px]"
+                className="border my-2 mx-1 w-[300px] md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[363px] md:min-h-[280px]"
                 key={product.id}
               >
                 <img
-                  className="rounded-t-lg w-full h-48 object-cover"
+                  className="rounded-t-lg w-full h-[250px] md:h-48 object-cover"
                   src={product.imageUrl}
                   alt={product.name}
                 />
