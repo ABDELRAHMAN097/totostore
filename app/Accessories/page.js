@@ -168,17 +168,17 @@ export default function AccessoriesPage() {
       </div>
 
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-4 rounded-lg max-w-md w-full text-center relative">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 px-3">
+          <div className="bg-white p-4 mt-[20px] rounded-lg max-w-md w-full text-center relative">
             <img
-              className="rounded-t-lg w-full object-cover"
+              className="rounded-t-lg w-full h-[400px] object-cover"
               src={CurrentImage}
               alt={CurrentImage}
             />
-            <h2 className="text-lg font-bold mb-2">{currentName}</h2>
+            <h2 className="text-lg font-bold mt-2">{currentName}</h2>
             <p>{currentDescription}</p>
             <button
-              className="text-pink-500 hover:text-pink-700 text-3xl rounded p-1 mt-4"
+              className="text-pink-500 hover:text-pink-700 text-3xl rounded p-1 mt-2"
               onClick={closeModal}
             >
               <IoMdCloseCircle />

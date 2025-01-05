@@ -91,7 +91,7 @@ export default function Page() {
         ))}
       </div>
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 px-3">
           <div className="bg-white p-4 rounded-lg max-w-md w-full text-center relative">
             <img
               className="rounded-t-lg w-full object-cover"
