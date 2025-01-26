@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { IoMdCloseCircle } from "react-icons/io";
 import { FaRegHeart } from "react-icons/fa";
 import { useCart } from "../CartContext/CartContext.jsx";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 export default function WomenProductsPage() {
   const [loading, setLoading] = useState(false);
@@ -81,6 +82,7 @@ export default function WomenProductsPage() {
   };
 
   return (
+    <ProtectedRoute>
     <div className="min-h-[44.5vh]">
       {loading && (
         <div className="loading-overlay">
@@ -187,5 +189,6 @@ export default function WomenProductsPage() {
         </div>
       )}
     </div>
+    </ProtectedRoute>
   );
 }

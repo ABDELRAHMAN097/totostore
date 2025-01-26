@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebase";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 export default function GetUsers() {
   const [users, setUsers] = useState([]);
@@ -42,6 +43,7 @@ export default function GetUsers() {
   }
 
   return (
+    <ProtectedRoute adminOnly={true}>
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Regular Users</h1>
       <ul>
@@ -57,5 +59,6 @@ export default function GetUsers() {
         )}
       </ul>
     </div>
+    </ProtectedRoute>
   );
 }

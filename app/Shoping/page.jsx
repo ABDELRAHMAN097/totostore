@@ -3,6 +3,7 @@ import React, { useEffect , useState } from 'react';
 import Link from "next/link";
 import { BarLoader } from "react-spinners";
 import { useCart } from '../CartContext/CartContext';
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 export default function ShoppingCart() {
   // loading
@@ -22,6 +23,7 @@ export default function ShoppingCart() {
   // Calculate the total cost of all products
   const totalCost = cartItems.reduce((total, product) => total + parseFloat(product.price) * product.quantity, 0);
   return (
+    <ProtectedRoute>
     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4 sm:px-6 lg:px-8">
       {loading && (
         <div className="loading-overlay">
@@ -114,5 +116,6 @@ export default function ShoppingCart() {
         </Link>
       </div>
     </div>
+    </ProtectedRoute>
   );
 }

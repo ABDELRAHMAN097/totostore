@@ -1,22 +1,29 @@
+// app/signin/page.js
 "use client";
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../lib/firebase";
 import { DotLoader } from "react-spinners";
+import { toast } from "react-toastify";
+import { useUser } from "../context/UserContext";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const { setUserRole } = useUser();
+  const router = useRouter();
 
   const handleSignin = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       if (!email || !password) {
-        alert("Please enter both email and password.");
+        toast.error("Please enter both email and password.");
         setLoading(false);
         return;
       }
@@ -26,27 +33,32 @@ export default function Signin() {
 
       const userDoc = await getDoc(doc(db, "users", user.uid));
       if (userDoc.exists()) {
-        const isAdmin = userDoc.data().isAdmin;
-        localStorage.setItem("isAdmin", JSON.stringify(isAdmin));
-        alert("Signed in successfully");
+        const userData = userDoc.data();
+        const isAdmin = userData.isAdmin || false;
 
-        // مسح حقول الإدخال بعد تسجيل الدخول الناجح
+        setUserRole(isAdmin ? "admin" : "user");
+
+        toast.success("Signed in successfully");
+
+        if (isAdmin) {
+          router.push("/dashboard");
+        } else {
+          router.push("/");
+        }
+
         setEmail("");
         setPassword("");
       } else {
-        alert("User does not exist in Firestore!");
+        toast.error("User does not exist in Firestore!");
       }
     } catch (error) {
       console.error("Error signing in:", error);
-      if (error.code === "auth/invalid-credential") {
-        alert("Invalid email or password. Please try again.");
-      } else if (error.code === "auth/user-not-found") {
-        alert("User not found. Please check your email.");
-      } else if (error.code === "auth/wrong-password") {
-        alert("Incorrect password. Please try again.");
-      } else {
-        alert("Error signing in. Please try again later.");
-      }
+      const errorMessages = {
+        "auth/invalid-credential": "Invalid email or password. Please try again.",
+        "auth/user-not-found": "User not found. Please check your email.",
+        "auth/wrong-password": "Incorrect password. Please try again.",
+      };
+      toast.error(errorMessages[error.code] || "Error signing in. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -54,9 +66,8 @@ export default function Signin() {
 
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 overflow-hidden">
-      <div className="absolute top-0 left-0 w-96 h-96 bg-pink-700 rounded-full opacity-30 animate-[pulse_5s_ease-in-out_infinite]" />
-      <div className="absolute top-10 right-0 w-72 h-72 bg-pink-300 rounded-full opacity-20 animate-[bounce_18s_ease-in-out_infinite]" />
-      <div className="absolute bottom-0 left-20 w-64 h-64 bg-pink-500 rounded-full opacity-25 animate-[spin_2s_linear_infinite]" />
+      <div className="absolute top-0 left-0 w-96 h-96 bg-pink-700 rounded-full opacity-20 animate-[pulse_8s_ease-in-out_infinite]" />
+      <div className="absolute bottom-0 left-20 w-64 h-64 bg-pink-500 rounded-full opacity-20 animate-[spin_3s_linear_infinite]" />
 
       <div className="relative z-10 w-full max-w-sm p-8 bg-gray-700 rounded-lg shadow-lg text-center">
         <h2 className="text-2xl font-semibold text-white mb-6">Sign In</h2>
@@ -88,8 +99,8 @@ export default function Signin() {
         <p className="text-white mt-4">
           Forgot your password?{" "}
           <Link href="/signup" className="text-blue-300 underline">
-          Sign Up
-        </Link>
+            Sign Up
+          </Link>
         </p>
       </div>
     </div>

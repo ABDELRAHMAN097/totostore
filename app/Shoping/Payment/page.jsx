@@ -2,6 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { useCart } from '../../CartContext/CartContext';
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 export default function PaymentPage() {
   const { cartItems, removeFromCart, increaseQuantity, decreaseQuantity } = useCart();
@@ -12,6 +13,7 @@ export default function PaymentPage() {
   const finalTotal = totalCost + shippingCost;
 
   return (
+    <ProtectedRoute>
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full md:w-4/5 bg-white shadow-lg rounded-lg p-4 md:p-8 flex flex-col md:flex-row">
         {/* Shopping Bag Section */}
@@ -93,6 +95,7 @@ export default function PaymentPage() {
         </div>
       </div>
     </div>
+    </ProtectedRoute>
   );
 }
 

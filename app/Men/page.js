@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useCart } from "../CartContext/CartContext.jsx";
 import { FaRegHeart } from "react-icons/fa";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 export default function MenProductsPage() {
   const [loading, setLoading] = useState(false);
@@ -81,29 +82,13 @@ export default function MenProductsPage() {
   };
 
   return (
+  <ProtectedRoute>
     <div className="min-h-[44.5vh]">
       {loading && (
         <div className="loading-overlay">
           <BarLoader color={"#d60096"} loading={loading} size={350} />
         </div>
-      )}
-
-      {/* <div
-        className="relative w-full h-[60vh] bg-cover bg-center"
-        style={{ backgroundImage: "url('/image/men cover.png')" }}
-      >
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white">
-          <h1 className="text-4xl font-bold mb-4">Welcome to Toto Store</h1>
-          <h2 className="text-2xl mb-6">Men's collection</h2>
-          <button
-            onClick={scrollToProducts}
-            className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Shop now
-          </button>
-        </div>
-      </div> */}
-    
+      )}    
     <div className="relative w-full h-[60vh] md:h-[70vh] lg:h-[80vh] overflow-hidden">
         <img
           src="/image/men cover.png"
@@ -210,5 +195,6 @@ export default function MenProductsPage() {
         </div>
       )}
     </div>
+  </ProtectedRoute>  
   );
 }
