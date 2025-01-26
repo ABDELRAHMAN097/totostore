@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { IoMdArrowDropdown } from "react-icons/io";
 import { FaHome } from "react-icons/fa";
+import { useUser } from "../context/UserContext"; // تأكد من صحة المسار
 
 const Navbar = () => {
+    const { user } = useUser();
     const [showDropdown, setShowDropdown] = useState(false);
     const toggleDropdown = () => {
         setShowDropdown(!showDropdown);
@@ -50,9 +52,11 @@ const Navbar = () => {
         </div>
       )}
     </div>
+    {user === "admin" &&
     <Link className="link" href="/dashboard">
      Dashboard
     </Link>
+    }
   </nav>
   )
 }
