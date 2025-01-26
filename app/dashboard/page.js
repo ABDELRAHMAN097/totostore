@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { db, storage } from "../firebase";
+import { db } from "../firebase";
 import {
   collection,
   getDocs,
@@ -11,7 +11,10 @@ import Link from "next/link";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { IoMdSettings } from "react-icons/io";
 import { MdAddBusiness } from "react-icons/md";
+import { BiSolidCalendarEdit } from "react-icons/bi";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import { useRouter } from "next/navigation";
+import { useUser } from "../context/UserContext";
 
 export default function Page() {
   const [products, setProducts] = useState([]);
@@ -41,6 +44,21 @@ export default function Page() {
       console.error("خطأ في حذف المنتج:", error);
     }
   };
+
+  const { user, userRole, loading } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    // لو المستخدم مش Admin، يتم توجيهه
+    if (!loading && userRole !== "admin") {
+      router.push("/signin"); // صفحة لرفض الوصول
+    }
+  }, [userRole, loading, router]);
+
+  // عرض Loading Spinner لحد ما يتم التحقق
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <ProtectedRoute adminOnly={true}>
@@ -78,6 +96,22 @@ export default function Page() {
             <MdAddBusiness className="text-[22px] md:text-[42px]" />
             </span>
             <p className="text-gray-500 mt-2">Add Products</p>
+          </div>
+        </Link>
+        <Link href="/isAdmin">
+          <div className="flex flex-col items-center justify-center bg-white p-4 rounded-lg shadow-md">
+            <span>
+            <BiSolidCalendarEdit className="text-[22px] md:text-[42px]" />
+            </span>
+            <p className="text-gray-500 mt-2">Edit Products</p>
+          </div>
+        </Link>
+        <Link href="/isAdmin">
+          <div className="flex flex-col items-center justify-center bg-white p-4 rounded-lg shadow-md">
+            <span>
+            <IoMdSettings className="text-[22px] md:text-[42px]" />
+            </span>
+            <p className="text-gray-500 mt-2">Delete Products</p>
           </div>
         </Link>
       </div>
