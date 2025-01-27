@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useCart } from "../CartContext/CartContext.jsx";
 import { FaRegHeart } from "react-icons/fa";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import ProtectedRoute from "../ProtectedRoute/page";
 
 export default function AccessoriesPage() {
   const [loading, setLoading] = useState(false);

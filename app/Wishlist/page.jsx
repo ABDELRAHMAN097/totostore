@@ -4,7 +4,7 @@ import { useCart } from "../CartContext/CartContext"; // ضع المسار ال�
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { toast } from "react-toastify";
 import { IoMdCloseCircle } from "react-icons/io";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import ProtectedRoute from "../ProtectedRoute/page";
 
 export default function Page() {
   const { addToCart, cartItems } = useCart();

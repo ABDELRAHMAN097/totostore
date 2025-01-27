@@ -12,7 +12,7 @@ import { RiDeleteBin5Fill } from "react-icons/ri";
 import { IoMdSettings } from "react-icons/io";
 import { MdAddBusiness } from "react-icons/md";
 import { BiSolidCalendarEdit } from "react-icons/bi";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import ProtectedRoute from "../ProtectedRoute/page";
 import { useRouter } from "next/navigation";
 import { useUser } from "../context/UserContext";
 

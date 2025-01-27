@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { IoMdCloseCircle } from "react-icons/io";
 import { FaRegHeart } from "react-icons/fa";
 import { useCart } from "../CartContext/CartContext.jsx";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import ProtectedRoute from "../ProtectedRoute/page";
 
 export default function WomenProductsPage() {
   const [loading, setLoading] = useState(false);
