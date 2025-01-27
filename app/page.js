@@ -60,7 +60,7 @@ const page = () => {
       section.scrollIntoView({ behavior: "smooth" });
     }
   };
-  
+
   // Add product to shopping cart
   const handleAddToCart = (product) => {
     addToCart(product);
@@ -76,7 +76,6 @@ const page = () => {
       }
     );
   };
-  
 
   return (
     <div className="min-h-[44.5vh]">
@@ -92,7 +91,9 @@ const page = () => {
       >
         <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white">
           <h1 className="text-4xl font-bold mb-4">Welcome to Toto Store</h1>
-          <h2 className="text-2xl mb-6">The best products at the best prices</h2>
+          <h2 className="text-2xl mb-6">
+            The best products at the best prices
+          </h2>
           <button
             onClick={scrollToProducts}
             className="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded"
@@ -102,7 +103,9 @@ const page = () => {
         </div>
       </div>
 
-      <h3 id="products-section" className="ml-5 my-5 text-gray-500">Trendy clothes</h3>
+      <h3 id="products-section" className="ml-5 my-5 text-gray-500">
+        Trendy clothes
+      </h3>
       <div>
         {products.length === 0 ? (
           <p className="text-center text-gray-500">No products found ... !</p>
@@ -119,31 +122,40 @@ const page = () => {
                   alt={product.name}
                 />
                 <div className="text-center p-2">
-                  <h2 className="text-surface dark:text-black">{product.name}</h2>
-                  <p className="text-surface dark:text-black">Price: ${product.price}</p>
+                  <h2 className="text-surface dark:text-black">
+                    {product.name}
+                  </h2>
+                  <p className="text-surface dark:text-black">
+                    Price: ${product.price}
+                  </p>
                   <div className="flex gap-1 mt-2 text-center justify-center">
-                  <button
-                    className="bg-blue-500 text-white rounded p-1"
-                    onClick={() =>
-                      openModal(
-                        product.description,
-                        product.imageUrl,
-                        product.name,
-                        product.category
-                      )
-                    }
-                  >
-                    Details
-                  </button>
+                    <button
+                      className="bg-blue-500 text-white rounded p-1"
+                      onClick={() =>
+                        openModal(
+                          product.description,
+                          product.imageUrl,
+                          product.name,
+                          product.category
+                        )
+                      }
+                    >
+                      Details
+                    </button>
 
-                  <button
+                    <button
                       className="bg-blue-500 text-white rounded p-1"
                       onClick={() => handleAddToWishlist(product)}
                     >
                       <FaRegHeart />
                     </button>
 
-                  <button className="bg-blue-500 text-white rounded p-1" onClick={() => handleAddToCart(product)}>Add</button>
+                    <button
+                      className="bg-blue-500 text-white rounded p-1"
+                      onClick={() => handleAddToCart(product)}
+                    >
+                      Add
+                    </button>
                   </div>
                 </div>
               </div>
@@ -153,10 +165,10 @@ const page = () => {
       </div>
 
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-4 rounded-lg max-w-md w-full text-center relative">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 px-3">
+          <div className="bg-white mx-3 md:mx-0 p-4 rounded-lg max-h-[600px] max-w-[350px] text-center relative">
             <img
-              className="rounded-t-lg w-full object-cover"
+              className="rounded-t-lg w-[270px] object-cover"
               src={CurrentImage}
               alt={CurrentImage}
             />
