@@ -11,11 +11,6 @@ module.exports = {
         primary: "rgb(255, 0, 234)", 
         secondary: "#1E90FF", 
         accent: "hsl(210, 50%, 60%)", 
-        neutral: {
-          100: "#f5f5f5",
-          200: "#e5e5e5",
-          300: "#d4d4d4",
-        },
       },
     },
   },

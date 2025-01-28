@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { useCart } from '../../CartContext/CartContext';
-import ProtectedRoute from "@/app/ProtectedRoute/page";
+import ProtectedRoute from "../../ProtectedRoute/page";
 
 export default function PaymentPage() {
   const { cartItems, removeFromCart, increaseQuantity, decreaseQuantity } = useCart();
