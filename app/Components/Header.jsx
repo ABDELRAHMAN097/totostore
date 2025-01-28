@@ -4,6 +4,7 @@ import Image from "next/image";
 import logo from "../../public/image/batman.png";
 import { FaSearch } from "react-icons/fa";
 import { IoPersonOutline } from "react-icons/io5";
+import { MdAccountCircle } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa";
 import { IoBagHandleOutline } from "react-icons/io5";
 import { useUser } from "../context/UserContext"; // تأكد من صحة المسار
@@ -39,7 +40,15 @@ const Header = () => {
             <IoPersonOutline className="text-gray-700 text-[20px] hover:text-pink-500 transition duration-300" />
           </Link>
         ) : (
-          <LogoutButton size={5} className="text-[20px]" /> // عرض زر تسجيل الخروج إذا كان المستخدم مسجل دخول
+          <>
+          <LogoutButton size={5} className="text-[20px]" />
+          <Link
+          className="text-gray-700 hover:text-pink-500 transition duration-300"
+          href="/profile"
+        >
+          <MdAccountCircle  size={5} className="size-5" />
+        </Link>
+        </>
         )}
         <Link
           className="text-gray-700 hover:text-pink-500 transition duration-300"

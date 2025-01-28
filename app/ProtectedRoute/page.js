@@ -30,5 +30,5 @@ export default function ProtectedRoute({ children, adminOnly = false }) {
     );
   }
 
-  return children; 
+  return children; // إرجاع المحتوى فقط إذا كان المستخدم له الصلاحيات
 }

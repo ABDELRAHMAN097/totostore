@@ -20,12 +20,15 @@ export const UserProvider = ({ children }) => {
           setUser({
             uid: user.uid,
             email: user.email,
-            isAdmin,
+            name: userDoc.data().name,
+            phone: userDoc.data().phone,
+            imageUrl: userDoc.data().imageUrl || "/default-avatar.png",
+            isAdmin: userDoc.data().isAdmin || false,
           });
-          setUserRole(isAdmin ? "admin" : "user"); // تعيين الدور
+          setUserRole(isAdmin ? "admin" : "user");
         } else {
           setUser(null);
-          setUserRole(null); // إعادة تعيين الدور
+          setUserRole(null);
         }
       } else {
         setUser(null);
@@ -36,6 +39,7 @@ export const UserProvider = ({ children }) => {
 
     return () => unsubscribe();
   }, []);
+
 
    // Function لتسجيل الخروج
    const logout = async () => {

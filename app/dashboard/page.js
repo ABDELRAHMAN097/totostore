@@ -51,7 +51,7 @@ export default function Page() {
   useEffect(() => {
     // لو المستخدم مش Admin، يتم توجيهه
     if (!loading && userRole !== "admin") {
-      router.push("/signin"); // صفحة لرفض الوصول
+      router.push("/403"); // صفحة لرفض الوصول
     }
   }, [userRole, loading, router]);
 
