@@ -3,7 +3,7 @@ import React, { useEffect , useState } from 'react';
 import Link from "next/link";
 import { BarLoader } from "react-spinners";
 import { useCart } from '../CartContext/CartContext';
-import ProtectedRoute from "../ProtectedRoute/page";
+import ProtectedRoute from '../ProtectedRoute/page';
 
 export default function ShoppingCart() {
   // loading

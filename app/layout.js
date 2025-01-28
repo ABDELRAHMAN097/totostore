@@ -5,10 +5,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CartProvider } from "../app/CartContext/CartContext.jsx";
 import { UserProvider } from "./context/UserContext";
-import Footer from "./Components/Footer";
 import Navbar from "./Components/Navbar";
 import Header from "./Components/Header";
 import Head from "./Components/head";
+import Footer from "./Components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 export default function RootLayout({ children }) {
