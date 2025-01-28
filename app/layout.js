@@ -19,6 +19,22 @@ export default function RootLayout({ children }) {
             {/* ToastContainer */}
             <ToastContainer position="top-right" autoClose={3000} />
             {/* head */}
+             <div className="head">
+                        <div className="social">
+                          <span>
+                            <FaFacebook className="social-icon" />
+                          </span>
+                          {/* <span><FaInstagram className="social-icon" /></span> */}
+                          <span>
+                            <FaTiktok className="social-icon" />
+                          </span>
+                        </div>
+                        <div>
+                          <h2 className="text-[14px] md:text-[16px]">
+                            Free Shipping This Week Order Over - $55
+                          </h2>
+                        </div>
+                      </div>
             {/* header */}
             <Header />
             {/* nav */}
