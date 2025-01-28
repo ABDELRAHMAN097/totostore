@@ -8,6 +8,7 @@ import { UserProvider } from "./context/UserContext";
 import Navbar from "./Components/Navbar";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
+import Head from "./Components/Head";
 
 const inter = Inter({ subsets: ["latin"] });
 export default function RootLayout({ children }) {
@@ -19,22 +20,7 @@ export default function RootLayout({ children }) {
             {/* ToastContainer */}
             <ToastContainer position="top-right" autoClose={3000} />
             {/* head */}
-             <div className="head">
-                        <div className="social">
-                          <span>
-                            <FaFacebook className="social-icon" />
-                          </span>
-                          {/* <span><FaInstagram className="social-icon" /></span> */}
-                          <span>
-                            <FaTiktok className="social-icon" />
-                          </span>
-                        </div>
-                        <div>
-                          <h2 className="text-[14px] md:text-[16px]">
-                            Free Shipping This Week Order Over - $55
-                          </h2>
-                        </div>
-                      </div>
+             <Head />
             {/* header */}
             <Header />
             {/* nav */}
