@@ -7,7 +7,6 @@ import { CartProvider } from "../app/CartContext/CartContext.jsx";
 import { UserProvider } from "./context/UserContext";
 import Navbar from "./Components/Navbar";
 import Header from "./Components/Header";
-import Head from "Components/Head";
 import Footer from "./Components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,7 +19,6 @@ export default function RootLayout({ children }) {
             {/* ToastContainer */}
             <ToastContainer position="top-right" autoClose={3000} />
             {/* head */}
-            <Head />
             {/* header */}
             <Header />
             {/* nav */}
