@@ -21,9 +21,9 @@ const LogoutButton = () => {
   return (
     <button
       onClick={handleLogout}
-      className="px-4 py-2 "
+      className="px-4 py-2 flex flex-row items-center gap-1"
     >
-      <IoIosLogOut className="text-[20px]"/>
+      <IoIosLogOut className="text-[20px]"/>logout
     </button>
   );
 };
