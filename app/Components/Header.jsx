@@ -7,11 +7,11 @@ import { IoPersonOutline } from "react-icons/io5";
 import { MdAccountCircle } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa";
 import { IoBagHandleOutline } from "react-icons/io5";
-import { useUser } from "../context/UserContext"; 
-import LogoutButton from "../LogoutButton/LogoutButton"; 
+import { useUser } from "../context/UserContext";
+import LogoutButton from "../LogoutButton/LogoutButton";
 
 const Header = () => {
-  const { user } = useUser(); 
+  const { user } = useUser();
 
   return (
     <header className="header flex items-center justify-between p-2 bg-white shadow-md">
@@ -41,14 +41,21 @@ const Header = () => {
           </Link>
         ) : (
           <>
-          <LogoutButton size={5} className="text-[20px]" />
-          <Link
-          className="text-gray-700 hover:text-pink-500 transition duration-300"
-          href="/profile"
-        >
-          <MdAccountCircle  size={5} className="size-5" />
-        </Link>
-        </>
+            <LogoutButton size={5} className="text-[20px]" />
+            <Link
+              className="text-gray-700 hover:text-pink-500 transition duration-300"
+              href="/MyAcount"
+            >
+              <div className="relative">
+                <img
+                  src={user.imageUrl}
+                  alt="Profile"
+                  className="w-7 h-7 mx-auto rounded-full border-[1.5px] border-pink-500"
+                />
+                <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-[1.5px] border-white rounded-full"></span>
+              </div>
+            </Link>
+          </>
         )}
         <Link
           className="text-gray-700 hover:text-pink-500 transition duration-300"
