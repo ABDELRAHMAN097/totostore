@@ -7,11 +7,11 @@ import { IoPersonOutline } from "react-icons/io5";
 import { MdAccountCircle } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa";
 import { IoBagHandleOutline } from "react-icons/io5";
-import { useUser } from "../context/UserContext"; // تأكد من صحة المسار
-import LogoutButton from "../LogoutButton/LogoutButton"; // تأكد من صحة المسار
+import { useUser } from "../context/UserContext"; 
+import LogoutButton from "../LogoutButton/LogoutButton"; 
 
 const Header = () => {
-  const { user } = useUser(); // الحصول على حالة المستخدم
+  const { user } = useUser(); 
 
   return (
     <header className="header flex items-center justify-between p-2 bg-white shadow-md">

@@ -41,11 +41,11 @@ export const UserProvider = ({ children }) => {
   }, []);
 
 
-   // Function لتسجيل الخروج
+   // Logout Function
    const logout = async () => {
     try {
-      await signOut(auth); // Firebase signOut
-      setUser(null); // تفريغ بيانات المستخدم
+      await signOut(auth);
+      setUser(null);
     } catch (error) {
       console.error("Error logging out: ", error);
     }
