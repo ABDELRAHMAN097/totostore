@@ -63,8 +63,8 @@ export default function Signup() {
           <h2 className="text-xl font-bold text-gray-700 text-center">Join Us Today!</h2>
         </div>
         <form onSubmit={handleSignup} className="md:w-1/2 p-5">
-          <h2 className="text-2xl font-bold mb-6 text-pink-500">Create an account</h2>
-          <p className="mb-4 text-gray-600">Enter your details below</p>
+          <h2 className="text-2xl font-bold mb-4 text-pink-500">Create an account</h2>
+          <p className="mb-3 text-gray-600">Enter your details below</p>
           <input
             type="text"
             placeholder="Name"
