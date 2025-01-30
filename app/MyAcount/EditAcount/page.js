@@ -7,6 +7,8 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+import Link from "next/link";
+import { FaLongArrowAltLeft } from "react-icons/fa";
 
 const EditAccount = () => {
   const { user, updateUser } = useUser();
@@ -60,7 +62,10 @@ const EditAccount = () => {
 
   return (
     <div className="p-4 max-w-md mx-auto bg-white rounded shadow">
-      <h1 className="text-xl font-bold mb-4">change data</h1>
+      <Link href="/MyAcount">
+          <FaLongArrowAltLeft className="text-pink-500 text-[30px] mb-4 p-1.5 rounded-full shadow-xl cursor-pointer"/>
+      </Link>
+      <h1 className="text-xl font-bold mb-2">change data</h1>
 
       {/* حقل الاسم */}
       <div className="mb-4">
