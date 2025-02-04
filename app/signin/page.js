@@ -1,51 +1,36 @@
-// app/signin/page.js
 "use client";
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../lib/firebase";
-import { DotLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import { useUser } from "../context/UserContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { RiEyeCloseLine, RiEyeLine } from "react-icons/ri";
 
 export default function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { setUserRole } = useUser();
   const router = useRouter();
 
   const handleSignin = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
     try {
       if (!email || !password) {
         toast.error("Please enter both email and password.");
-        setLoading(false);
         return;
       }
-
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-
       const userDoc = await getDoc(doc(db, "users", user.uid));
       if (userDoc.exists()) {
         const userData = userDoc.data();
-        const isAdmin = userData.isAdmin || false;
-
-        setUserRole(isAdmin ? "admin" : "user");
-
+        setUserRole(userData.isAdmin ? "admin" : "user");
         toast.success("Signed in successfully");
-
-        if (isAdmin) {
-          router.push("/dashboard");
-        } else {
-          router.push("/");
-        }
-
+        router.push(userData.isAdmin ? "/dashboard" : "/");
         setEmail("");
         setPassword("");
       } else {
@@ -59,49 +44,56 @@ export default function Signin() {
         "auth/wrong-password": "Incorrect password. Please try again.",
       };
       toast.error(errorMessages[error.code] || "Error signing in. Please try again later.");
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
-    <div className="relative flex items-center justify-center min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 overflow-hidden">
-      <div className="absolute top-0 left-0 w-96 h-96 bg-pink-700 rounded-full opacity-20 animate-[pulse_8s_ease-in-out_infinite]" />
-      <div className="absolute bottom-0 left-20 w-64 h-64 bg-pink-500 rounded-full opacity-20 animate-[spin_3s_linear_infinite]" />
-
-      <div className="relative z-10 w-full max-w-sm p-8 bg-gray-700 rounded-lg shadow-lg text-center">
-        <h2 className="text-2xl font-semibold text-white mb-6">Sign In</h2>
-        <form onSubmit={handleSignin}>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="flex flex-col md:flex-row w-full max-w-4xl shadow-lg bg-white rounded-md">
+        <div className="md:w-1/2 flex flex-col justify-center items-center bg-[#CBE4E8] rounded-tl-md rounded-bl-md">
+          <img src="/image/login.png" alt="Signin" className="w-3/4 mb-4" />
+          <h2 className="text-xl font-bold text-gray-700 text-center">Welcome Back!</h2>
+        </div>
+        <form onSubmit={handleSignin} className="md:w-1/2 p-5">
+          <h2 className="text-2xl font-bold mb-4 text-pink-500">Sign in to your account</h2>
+          <p className="mb-3 text-gray-600">Enter your credentials below</p>
           <input
             type="email"
+            placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
+            className="w-full mb-4 p-1 border border-gray-300 rounded"
             required
-            className="w-full p-3 mb-4 text-sm rounded bg-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            required
-            className="w-full p-3 mb-4 text-sm rounded bg-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
+          <div className="relative w-full">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-1 border border-gray-300 rounded pr-10 text-base"
+              required
+              aria-label="Password"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center text-gray-500"
+            >
+              {showPassword ? <RiEyeLine size={20} /> : <RiEyeCloseLine size={20} />}
+            </button>
+          </div>
           <button
             type="submit"
-            className="w-full p-3 mt-4 text-sm font-semibold text-white bg-pink-500 rounded hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            disabled={loading}
+            className="w-full bg-pink-500 hover:bg-pink-700 text-white py-3 rounded transition mt-4"
           >
-            {loading ? <DotLoader color="#ffffff" size={24} /> : "Log In"}
+            Sign In
           </button>
+          <p className="mt-6 text-gray-600 text-center">
+            Don't have an account?{" "}
+            <Link href="/signup" className="text-blue-500">Sign Up</Link>
+          </p>
         </form>
-        <p className="text-white mt-4">
-          Forgot your password?{" "}
-          <Link href="/signup" className="text-blue-300 underline">
-            Sign Up
-          </Link>
-        </p>
       </div>
     </div>
   );

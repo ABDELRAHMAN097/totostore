@@ -36,7 +36,7 @@ const ProfilePage = () => {
         <img
           src={user.imageUrl}
           alt="Profile"
-          className="w-full h-full rounded-full border-4 border-gray-200"
+          className="w-full rounded-full border-4 border-gray-200"
         />
         <div className="absolute bottom-1 right-1 bg-pink-500 p-1.5 rounded-full shadow-md cursor-pointer">
           <svg
