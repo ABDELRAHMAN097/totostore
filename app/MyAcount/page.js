@@ -36,8 +36,9 @@ const ProfilePage = () => {
         <img
           src={user.imageUrl}
           alt="Profile"
-          className="w-full rounded-full border-4 border-gray-200"
+          className="w-full h-full rounded-full border-4 border-gray-200"
         />
+        <Link href="/MyAcount/EditAcount">
         <div className="absolute bottom-1 right-1 bg-pink-500 p-1.5 rounded-full shadow-md cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -48,6 +49,7 @@ const ProfilePage = () => {
             <path d="M17.414 2.586a2 2 0 010 2.828L8.828 14l-4.242.707.707-4.242L14.586 2.586a2 2 0 012.828 0z" />
           </svg>
         </div>
+        </Link>
       </div>
 
       {/* username*/}
