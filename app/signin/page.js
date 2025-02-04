@@ -70,6 +70,9 @@ export default function Signin() {
               type={showPassword ? "text" : "password"}
               placeholder="Password"
               value={password}
+              maxLength={13}
+              minLength={6}
+              autoComplete="current-password"
               onChange={(e) => setPassword(e.target.value)}
               className="w-full p-1 border border-gray-300 rounded pr-10 text-base"
               required
