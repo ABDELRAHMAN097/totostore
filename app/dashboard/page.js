@@ -64,7 +64,7 @@ export default function Page() {
             <p className="text-gray-500 mt-2">Add Products</p>
           </div>
         </Link>
-        <Link href="/isAdmin">
+        <Link href="/dashboard/editProduct">
           <div className="flex flex-col items-center justify-center bg-white p-4 rounded-lg shadow-md">
             <span>
             <BiSolidCalendarEdit className="text-[22px] md:text-[42px]" />

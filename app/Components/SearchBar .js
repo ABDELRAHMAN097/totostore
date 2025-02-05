@@ -21,7 +21,7 @@ const SearchBar = ({ products, setFilteredProducts }) => {
         placeholder="Search for a product..."
         value={query}
         onChange={handleSearch}
-        className="border border-gray-300 p-2 rounded w-[80%] md:w-[50%]"
+        className="border border-gray-300 rounded-full focus:outline-none focus:border-pink-500 p-2 w-[80%] md:w-[50%]"
       />
     </div>
   );
