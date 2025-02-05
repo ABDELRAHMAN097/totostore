@@ -23,9 +23,15 @@ export default function RootLayout({ children }) {
             <Header />
             {/* nav */}
             <Navbar />
-            <div className="min-h-screen">
-            {children}
+
+              {/* Main content area with flex */}
+              <div className="flex flex-col my-3 min-h-[52.3vh]">
+              {/* This div takes up remaining space */}
+              <div className="flex-grow">
+                {children}
+              </div>
             </div>
+          
             {/* footer */}
             <Footer />
           </CartProvider>
