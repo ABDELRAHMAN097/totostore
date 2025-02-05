@@ -101,44 +101,44 @@ const EditProduct = () => {
       />
 
       {/* عرض المنتجات */}
-      <div className="flex flex-col gap-2 mx-4">
+      <div className="flex flex-col gap-0 md:gap-2 mx-5">
         {filteredProducts.length === 0 ? (
           <p>No Products Available</p>
         ) : (
           filteredProducts.map((product) => (
             <div
               key={product.id}
-              className="flex flex-row items-center justify-between w-full bg-slate-100 p-1 rounded-lg shadow-md"
+              className="flex flex-col md:flex-row items-center justify-between w-full my-3 p-3  bg-pink-200 rounded-lg shadow-md"
             >
               <div className="flex-shrink-0">
                 <img
                   src={product.imageUrl}
                   alt={product.name}
-                  className="w-[50px] h-[50px] object-cover rounded-lg"
+                  className="w-[50px] h-[50px] object-cover rounded-lg mb-2"
                 />
               </div>
 
-              <div className="flex-1 ml-4">
+              <div className="flex-1 ml-0 md:ml-4">
                 <h2 className="text-xl font-bold">{product.name}</h2>
               </div>
 
-              <div className="flex-1 ml-4">
+              <div className="flex-1 ml-0 md:ml-4">
                 <p className="text-gray-500">Price: ${product.price}</p>
               </div>
 
-              <div className="flex-1 ml-4">
+              <div className="flex-1 ml-0 md:ml-4">
                 <p className="text-gray-500">
                   Description: {product.description}
                 </p>
               </div>
 
-              <div className="flex-1 ml-4">
+              <div className="flex-1 ml-0 md:ml-4">
                 <p className="text-gray-500">Category: {product.category}</p>
               </div>
 
               <div>
                 <button
-                  className="mt-4 text-center p-2 bg-blue-500 text-white rounded-lg"
+                  className="mt-4 text-center p-2 bg-pink-500 text-white rounded-lg"
                   onClick={() => handleEditProduct(product.id)}
                 >
                   Edit
