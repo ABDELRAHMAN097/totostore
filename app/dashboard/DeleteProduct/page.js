@@ -77,7 +77,7 @@ const DeleteProduct = () => {
             filteredProducts.map((product) => (
               <div
                 key={product.id}
-                className="flex flex-row items-center justify-between w-full bg-slate-100 p-1 rounded-lg shadow-md"
+                className="flex flex-col md:flex-row items-center justify-between w-full border hover:border-pink-400 bg-slate-100 my-3 p-3 rounded-lg shadow-md"
               >
                 <div className="flex-shrink-0">
                   <img

@@ -108,7 +108,7 @@ const EditProduct = () => {
           filteredProducts.map((product) => (
             <div
               key={product.id}
-              className="flex flex-col md:flex-row items-center justify-between w-full my-3 p-3 border border-pink-400 rounded-lg shadow-md"
+              className="flex flex-col md:flex-row items-center justify-between w-full my-3 p-3 border hover:border-pink-400 bg-slate-100 rounded-lg shadow-md"
             >
               <div className="flex-shrink-0">
                 <img
