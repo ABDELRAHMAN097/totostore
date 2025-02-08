@@ -18,7 +18,7 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="max-w-sm mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg text-center relative">
+    <div className="max-w-sm mx-auto mt-10 p-6 bg-white border border-2 shadow-lg rounded-lg text-center relative">
       {/* go back */}
       <div className="absolute left-3 top-3">
         <Link href="/">

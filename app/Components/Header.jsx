@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "../../public/image/batman.png";
+import logo from "../../public/image/1.png";
 import { FaSearch, FaRegHeart } from "react-icons/fa";
 import { IoPersonOutline, IoBagHandleOutline } from "react-icons/io5";
 import { useUser } from "../context/UserContext";
@@ -31,9 +31,18 @@ const Header = () => {
     <header className="header flex items-center justify-between p-2 bg-white shadow-md">
       <a
         href="/"
-        className="w-10 h-10 mr-3 flex items-center justify-center sm:w-12 sm:h-12 md:w-16 md:h-16"
+        className="flex items-center justify-center"
       >
-        <Image src={logo} alt="logo" className="w-full" />
+        <div className="w-[100px]">
+          <Image
+            src={logo}
+            alt="logo"
+            className="w-full"
+            width={900}
+            height={900}
+            priority
+          />
+        </div>
       </a>
 
       {/* <div className="flex flex-1 items-center justify-center mx-2 sm:mx-4 md:mx-6 relative">
@@ -45,7 +54,7 @@ const Header = () => {
         <FaSearch className="absolute left-3 text-gray-400" />
       </div> */}
 
-      <div className="flex items-center space-x-3 sm:space-x-4">
+      <div className="flex items-center gap-3">
         {!user ? (
           <Link
             className="text-gray-700 hover:text-pink-500 transition duration-300"
@@ -68,17 +77,16 @@ const Header = () => {
               <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-[1.5px] border-white rounded-full"></span>
             </div>
 
-            {/* القائمة المنسدلة */}
+            {/* DropdownOpen */}
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg overflow-hidden z-50">
                 <Link
                   href="/MyAcount"
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                 >
-                 profile
+                  profile
                 </Link>
                 <LogoutButton className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100" />
-
               </div>
             )}
           </div>

@@ -1,7 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { collection, getDocs, doc, updateDoc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+  getDoc,
+} from "firebase/firestore";
 import { db } from "../lib/firebase"; // تأكد أن db هو import صحيح لـ Firebase Firestore
 import { auth } from "../lib/firebase"; // تأكد من أن auth هو Firebase Authentication
 
@@ -63,9 +69,55 @@ export default function ManageUsers() {
     }
   };
 
+  // table data
+  // const columnNames = [
+  //   "Photo",
+  //   "Member name",
+  //   "Mopile",
+  //   "Email",
+  //   "Status",
+  //   "Operation",
+  //   "Action",
+  // ];
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Manage Users</h1>
+
+      {/*  */}
+{/* 
+      <div className="flex justify-start items-center min-h-screen bg-gray-100 p-4">
+        <div className="w-full overflow-x-auto">
+          <table className="w-full min-w-max bg-white shadow-md rounded-lg">
+            <thead className="text-gray-300">
+              <tr>
+                {columnNames.map((name, colIndex) => (
+                  <th
+                    key={colIndex}
+                    className="px-4 py-2 text-sm md:text-base lg:text-lg font-bold text-gray-200"
+                  >
+                    {name}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              
+                  {users.map((user) => (
+                    <tr
+                      key={user.uid}
+                      className="px-4 py-2 text-xs md:text-sm lg:text-base text-gray-700"
+                    >
+                     <td>{user.imageUrl}</td> 
+                    </tr>
+                  ))}
+              
+             
+            </tbody>
+          </table>
+        </div>
+      </div> */}
+      {/*  */}
 
       {!isAdmin ? (
         <p className="text-red-500">Access denied: You are not an admin.</p>
