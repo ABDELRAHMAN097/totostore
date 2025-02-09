@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useCart } from "../app/CartContext/CartContext";
 import { FaRegHeart } from "react-icons/fa";
+import Link from "next/link";
 
 const page = () => {
   const [loading, setLoading] = useState(false);
@@ -112,6 +113,7 @@ const page = () => {
         ) : (
           <div className="products px-2 md:p-0">
             {products.map((product) => (
+            <Link href={`/DetailsProduct/${product.id}`}>
               <div
                 className="border my-2 mx-1 w-[300px] md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[363px] md:min-h-[280px]"
                 key={product.id}
@@ -149,16 +151,10 @@ const page = () => {
                     >
                       <FaRegHeart />
                     </button>
-
-                    <button
-                      className="bg-blue-500 text-white rounded p-1"
-                      onClick={() => handleAddToCart(product)}
-                    >
-                      Add
-                    </button>
                   </div>
                 </div>
               </div>
+            </Link>
             ))}
           </div>
         )}
