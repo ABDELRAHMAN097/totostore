@@ -7,58 +7,63 @@ import {
   doc,
   updateDoc,
   getDoc,
+  deleteDoc,
 } from "firebase/firestore";
-import { db } from "../lib/firebase"; // تأكد أن db هو import صحيح لـ Firebase Firestore
-import { auth } from "../lib/firebase"; // تأكد من أن auth هو Firebase Authentication
+import { db, auth } from "../lib/firebase"; // تأكد أن استيراد db و auth صحيح
+import { onAuthStateChanged } from "firebase/auth";
+import { MdAdminPanelSettings } from "react-icons/md";
+import { FaChalkboardUser } from "react-icons/fa6";
 
 export default function ManageUsers() {
   const [users, setUsers] = useState([]);
-  const [isAdmin, setIsAdmin] = useState(false); // حالة للتحقق من إذا كان المستخدم الحالي أدمن
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null); // حفظ المستخدم الحالي
 
-  // استدعاء المستخدمين
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        // التحقق من حالة المستخدم الحالي (هل هو أدمن؟)
-        const currentUserRef = doc(db, "users", auth.currentUser.uid);
-        const currentUserSnap = await getDoc(currentUserRef);
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setCurrentUser(user); // تحديث المستخدم الحالي
+        try {
+          const currentUserRef = doc(db, "users", user.uid);
+          const currentUserSnap = await getDoc(currentUserRef);
 
-        if (currentUserSnap.exists() && currentUserSnap.data().isAdmin) {
-          setIsAdmin(true); // المستخدم الحالي أدمن
+          if (currentUserSnap.exists() && currentUserSnap.data().isAdmin) {
+            setIsAdmin(true);
 
-          // استدعاء بيانات جميع المستخدمين
-          const usersCollection = collection(db, "users");
-          const userSnapshot = await getDocs(usersCollection);
-          const userList = userSnapshot.docs.map((doc) => ({
-            uid: doc.id,
-            ...doc.data(),
-          }));
-          setUsers(userList);
-        } else {
-          console.error("Access denied: You are not an admin.");
+            // جلب بيانات المستخدمين
+            const usersCollection = collection(db, "users");
+            const userSnapshot = await getDocs(usersCollection);
+            const userList = userSnapshot.docs.map((doc) => ({
+              uid: doc.id,
+              ...doc.data(),
+            }));
+            setUsers(userList);
+          } else {
+            console.error("Access denied: You are not an admin.");
+          }
+        } catch (error) {
+          console.error("Error fetching users:", error);
         }
-      } catch (error) {
-        console.error("Error fetching users:", error);
+      } else {
+        console.error("No user is logged in.");
+        setCurrentUser(null);
+        setIsAdmin(false);
       }
-    };
+    });
 
-    fetchUsers();
+    return () => unsubscribe();
   }, []);
 
-  // تعديل دور المستخدم
   const toggleAdmin = async (uid, currentIsAdmin) => {
+    if (!isAdmin) {
+      console.error("Access denied: You are not an admin.");
+      return;
+    }
+
     try {
-      if (!isAdmin) {
-        console.error("Access denied: You are not an admin.");
-        return;
-      }
-
       const userRef = doc(db, "users", uid);
-      await updateDoc(userRef, {
-        isAdmin: !currentIsAdmin,
-      });
+      await updateDoc(userRef, { isAdmin: !currentIsAdmin });
 
-      // تحديث حالة المستخدمين في الـ state
       setUsers((prevUsers) =>
         prevUsers.map((user) =>
           user.uid === uid ? { ...user, isAdmin: !currentIsAdmin } : user
@@ -69,32 +74,29 @@ export default function ManageUsers() {
     }
   };
 
-  // table data
-  // const columnNames = [
-  //   "Photo",
-  //   "Member name",
-  //   "Mopile",
-  //   "Email",
-  //   "Status",
-  //   "Operation",
-  //   "Action",
-  // ];
+  const columnNames = [
+    "Photo",
+    "Member name",
+    "Mobile",
+    "Email",
+    "Status",
+    "Operation",
+    "Action",
+  ];
 
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Manage Users</h1>
 
-      {/*  */}
-{/* 
-      <div className="flex justify-start items-center min-h-screen bg-gray-100 p-4">
+      <div className="flex justify-start items-center min-h-screen border rounded-lg shadow-md p-4">
         <div className="w-full overflow-x-auto">
-          <table className="w-full min-w-max bg-white shadow-md rounded-lg">
+          <table className="w-full min-w-max">
             <thead className="text-gray-300">
               <tr>
                 {columnNames.map((name, colIndex) => (
                   <th
                     key={colIndex}
-                    className="px-4 py-2 text-sm md:text-base lg:text-lg font-bold text-gray-200"
+                    className="px-4 py-2 text-sm md:text-base lg:text-lg font-bold text-gray-500"
                   >
                     {name}
                   </th>
@@ -102,52 +104,50 @@ export default function ManageUsers() {
               </tr>
             </thead>
             <tbody>
-              
-                  {users.map((user) => (
-                    <tr
-                      key={user.uid}
-                      className="px-4 py-2 text-xs md:text-sm lg:text-base text-gray-700"
+              {users.map((user) => (
+                <tr key={user.uid} className="text-center text-gray-700">
+                  <td className="px-4 py-2 text-xs md:text-sm lg:text-base">
+                    <img
+                      src={user.imageUrl}
+                      alt={user.name}
+                      className="w-12 h-12 rounded-full mx-auto"
+                    />
+                  </td>
+                  <td className="px-4 py-2 text-xs md:text-sm lg:text-base">
+                    {user.name}
+                  </td>
+                  <td className="px-4 py-2 text-xs md:text-sm lg:text-base">
+                    {user.phone}
+                  </td>
+                  <td className="px-4 py-2 text-xs md:text-sm lg:text-base">
+                    {user.email}
+                  </td>
+                  <td className="px-4 py-2 text-xs md:text-sm lg:text-base">
+                    {user.isAdmin ? "✅" : "❌"}
+                  </td>
+                  <td className="px-4 py-2 text-xs md:text-sm lg:text-base">
+                    <button
+                      className="ml-4 bg-blue-500 text-white px-2 py-1 rounded"
+                      onClick={() => toggleAdmin(user.uid, user.isAdmin)}
                     >
-                     <td>{user.imageUrl}</td> 
-                    </tr>
-                  ))}
-              
-             
+                      {user.isAdmin ? (
+                        <FaChalkboardUser />
+                      ) : (
+                        <MdAdminPanelSettings />
+                      )}
+                    </button>
+                  </td>
+                  <td className="px-4 py-2 text-xs md:text-sm lg:text-base text-pink-400 cursor-pointer">
+                    delete
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
-      </div> */}
-      {/*  */}
+      </div>
 
-      {!isAdmin ? (
-        <p className="text-red-500">Access denied: You are not an admin.</p>
-      ) : (
-        <ul>
-          {users.map((user) => (
-            <li
-              key={user.uid}
-              className="mb-2 p-2 border-b border-gray-200 flex justify-between items-center"
-            >
-              <div>
-                <span className="mr-4">{user.email}</span>
-                <span
-                  className={`${
-                    user.isAdmin ? "text-green-600" : "text-red-600"
-                  } font-bold`}
-                >
-                  {user.isAdmin ? "Admin" : "User"}
-                </span>
-              </div>
-              <button
-                className="ml-4 bg-blue-500 text-white px-2 py-1 rounded"
-                onClick={() => toggleAdmin(user.uid, user.isAdmin)}
-              >
-                {user.isAdmin ? "Remove Admin" : "Make Admin"}
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
+      
     </div>
   );
 }

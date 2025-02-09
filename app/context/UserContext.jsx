@@ -1,7 +1,7 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
 import { onAuthStateChanged, signOut  } from "firebase/auth";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { auth, db } from "../lib/firebase";
 
 const UserContext = createContext();
@@ -58,6 +58,9 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  // Delete User Function
+  
+
    // Logout Function
    const logout = async () => {
     try {
@@ -69,7 +72,7 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, updateUser, userRole, setUserRole, loading, logout }}>
+    <UserContext.Provider value={{ user, updateUser, userRole, setUserRole, loading, logout}}>
       {children}
     </UserContext.Provider>
   );
