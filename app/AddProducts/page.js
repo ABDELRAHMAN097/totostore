@@ -3,36 +3,36 @@ import React, { useState } from "react";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { addDoc, collection } from "firebase/firestore";
 import { db, storage } from "../firebase"; // تأكد من صحة المسار
-
 export default function AddProducts() {
-  const [file, setFile] = useState(null);
+  const [files, setFiles] = useState([]);
+  const [previewImages, setPreviewImages] = useState([]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Men");
+  const [rating, setRating] = useState(0);
+  const [stock, setStock] = useState(1);
+  const [brand, setBrand] = useState("");
+  const [discount, setDiscount] = useState(0);
 
-  const uploadProductImage = async (file) => {
-    if (!file) {
-      throw new Error("لا يوجد ملف للرفع.");
-    }
-    const storageRef = ref(storage, `products/${file.name}`);
-    try {
+  const uploadProductImages = async (files) => {
+    if (!files.length) throw new Error("لا توجد ملفات للرفع.");
+
+    const uploadPromises = files.map(async (file) => {
+      const storageRef = ref(storage, `products/${file.name}`);
       const snapshot = await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(snapshot.ref);
-      console.log("رابط الصورة:", downloadURL);
-      return downloadURL;
-    } catch (error) {
-      console.error("خطأ في رفع الصورة:", error);
-      throw error;
-    }
+      return await getDownloadURL(snapshot.ref);
+    });
+
+    return await Promise.all(uploadPromises);
   };
 
-  const addProductWithImage = async (productData) => {
+  const addProductWithImages = async (productData) => {
     try {
-      const imageUrl = await uploadProductImage(file);
+      const imageUrls = await uploadProductImages(files);
       const docRef = await addDoc(collection(db, "products"), {
         ...productData,
-        imageUrl,
+        imageUrls,
       });
       console.log("تم إضافة المنتج بالمعرف:", docRef.id);
       return true;
@@ -43,60 +43,92 @@ export default function AddProducts() {
   };
 
   const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    console.log("الملف المحدد:", selectedFile);
-    setFile(selectedFile);
+    const selectedFiles = Array.from(e.target.files).slice(0, 5);
+    setFiles(selectedFiles);
+
+    // إنشاء عرض للصور قبل الرفع
+    const previewUrls = selectedFiles.map((file) => URL.createObjectURL(file));
+    setPreviewImages(previewUrls);
   };
 
   const handleAddProduct = async () => {
-    if (file && name && price) {
+    if (files.length > 0 && name && price && rating > 0 && stock > 0) {
       const productData = {
         name,
         price: parseFloat(price),
         description,
         category,
+        rating,
+        stock: parseInt(stock),
+        brand,
+        discount: parseFloat(discount),
       };
 
-      const success = await addProductWithImage(productData);
+      const success = await addProductWithImages(productData);
       if (success) {
         resetForm();
-        // استدعاء fetchProducts إذا كان موجودًا
         console.log("تم إضافة المنتج بنجاح.");
       } else {
         console.error("فشل في إضافة المنتج.");
       }
     } else {
-      console.error("لم يتم تحديد ملف أو تفاصيل المنتج مفقودة.");
+      console.error("تأكد من إدخال جميع الحقول بشكل صحيح.");
     }
   };
 
   const resetForm = () => {
-    setFile(null);
+    setFiles([]);
+    setPreviewImages([]);
     setName("");
     setPrice("");
     setDescription("");
     setCategory("Men");
+    setRating(0);
+    setStock(1);
+    setBrand("");
+    setDiscount(0);
   };
 
   return (
-    <div className="my-8 mx-4 min-h-[47.4vh]">
+    <div className="my-8 mx-4 min-h-[50vh]">
       <input
         className="block w-full border border-gray-300 p-2 rounded-lg mb-4"
         type="text"
-        placeholder="Product Name"
+        placeholder="اسم المنتج"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
       <input
         className="block w-full border border-gray-300 p-2 rounded-lg mb-4"
         type="number"
-        placeholder="Price"
+        placeholder="السعر"
         value={price}
         onChange={(e) => setPrice(e.target.value)}
       />
+      <input
+        className="block w-full border border-gray-300 p-2 rounded-lg mb-4"
+        type="text"
+        placeholder="اسم العلامة التجارية"
+        value={brand === 1 ? "" : brand}
+        onChange={(e) => setBrand(e.target.value)}
+      />
+      <input
+        className="block w-full border border-gray-300 p-2 rounded-lg mb-4"
+        type="number"
+        placeholder="عدد القطع في المخزون"
+        value={stock === 1 ? "" : stock}
+        onChange={(e) => setStock(e.target.value)}
+      />
+      <input
+        className="block w-full border border-gray-300 p-2 rounded-lg mb-4"
+        type="number"
+        placeholder="نسبة الخصم (%)"
+        value={discount === 1 ? "" : discount}
+        onChange={(e) => setDiscount(e.target.value)}
+      />
       <textarea
         className="block w-full border border-gray-300 p-2 rounded-lg mb-4"
-        placeholder="Description"
+        placeholder="الوصف"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
@@ -110,15 +142,39 @@ export default function AddProducts() {
         <option value="Accessories">Accessories</option>
       </select>
       <input
+        className="block w-full border border-gray-300 p-2 rounded-lg mb-4"
+        type="number"
+        placeholder="التقييم (1-5)"
+        value={rating === 1 ? "" : rating}
+        onChange={(e) => setRating(e.target.value)}
+      />
+
+      {/* عرض الصور قبل الرفع */}
+      {previewImages.length > 0 && (
+        <div className="flex gap-2 mb-4">
+          {previewImages.map((src, index) => (
+            <img
+              key={index}
+              src={src}
+              alt="معاينة الصورة"
+              className="w-20 h-20 object-cover rounded-lg border"
+            />
+          ))}
+        </div>
+      )}
+
+      <input
         type="file"
+        multiple
         className="block w-full mb-4"
+        accept="image/*"
         onChange={handleFileChange}
       />
       <button
-        className="block w-full p-2 bg-blue-600 text-white rounded-lg"
+        className="block w-full p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
         onClick={handleAddProduct}
       >
-        Add Product
+        إضافة المنتج
       </button>
     </div>
   );

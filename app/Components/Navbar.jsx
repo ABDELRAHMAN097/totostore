@@ -18,7 +18,7 @@ const Navbar = () => {
       <Link className="link" href="/">
         <FaHome className="text-2xl" />
       </Link>
-      <div className="relative inline-block">
+      {/* <div className="relative inline-block">
         <button className="link flex items-center" onClick={toggleDropdown}>
           Categories <IoMdArrowDropdown className="text-2xl" />
         </button>
@@ -48,7 +48,7 @@ const Navbar = () => {
             </Link>
           </div>
         )}
-      </div>
+      </div> */}
       {user?.isAdmin && (
         <Link className="link" href="/dashboard">
           Dashboard
