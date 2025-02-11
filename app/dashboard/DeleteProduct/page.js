@@ -81,7 +81,7 @@ const DeleteProduct = () => {
               >
                 <div className="flex-shrink-0">
                   <img
-                    src={product.imageUrl}
+                    src={product.imageUrls?.[0] || "/placeholder.png"}
                     alt={product.name}
                     className="w-[50px] h-[50px] object-cover rounded-lg"
                   />

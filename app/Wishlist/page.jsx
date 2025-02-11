@@ -26,8 +26,8 @@ export default function Page() {
     setShowModal(false);
   };
 
-   // Add product to shopping cart
-   const handleAddToCart = (product) => {
+  // Add product to shopping cart
+  const handleAddToCart = (product) => {
     addToCart(product);
     localStorage.setItem("cartItems", JSON.stringify([...cartItems, product]));
     toast.success(
@@ -44,100 +44,103 @@ export default function Page() {
 
   return (
     <ProtectedRoute>
-    <div className="container min-h-[44.5vh] mx-auto p-2">
-      <h1 className="text-3xl my-5 font-semibold text-center">Wishlist</h1>
-      <div className="products px-2 md:p-0">
-        {wishlistItems.map((product) => (
-          <div
-            className="border my-2 mx-1 w-[300px] md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[363px] md:min-h-[280px]"
-            key={product.id}
-          >
-            <img
-              className="rounded-t-lg w-full h-[250px] md:h-48 object-cover"
-              src={product.imageUrl}
-              alt={product.name}
-            />
-            <div className="text-center p-2">
-              <h2 className="text-surface dark:text-black">{product.name}</h2>
-              <p className="text-surface dark:text-black">
-                Price: ${product.price}
-              </p>
-              <div className="flex justify-center gap-1 mt-2">
-                <button
-                  className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1"
-                  onClick={() =>
-                    openModal(
-                      product.description,
-                      product.imageUrl,
-                      product.name
-                    )
-                  }
-                >
-                  Details
-                </button>
-                <button
-                  className="bg-pink-500 text-white rounded p-1 hover:bg-pink-700 font-semibold transition-colors duration-300"
-                  onClick={() => removeFromWishlist(product.id)}
-                >
-                  <RiDeleteBin5Fill className="w-full text-center text-3xl" />
-                </button>
-                <button
-                  className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1"
-                  onClick={() => handleAddToCart(product)}
-                >
-                  Add
-                </button>
+      <div className="container min-h-[44.5vh] mx-auto p-2">
+        <h1 className="text-3xl my-5 font-semibold text-center">Wishlist</h1>
+        <div className="products px-2 md:p-0">
+          {wishlistItems.map((product) => (
+            <div
+              className="border my-2 mx-1 w-[300px] md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[363px] md:min-h-[280px]"
+              key={product.id}
+            >
+              <img
+                className="rounded-t-lg w-full h-[250px] md:h-48 object-cover"
+                src={product.imageUrls?.[0] || "/placeholder.png"}
+                alt={product.name}
+              />
+              <div className="text-center p-2">
+                <h2 className="text-surface dark:text-black">{product.name}</h2>
+                <p className="text-surface dark:text-black">
+                  Price: ${product.price}
+                </p>
+                <div className="flex justify-center gap-1 mt-2">
+                  <button
+                    className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1"
+                    onClick={() =>
+                      openModal(
+                        product.description,
+                        product.imageUrl,
+                        product.name
+                      )
+                    }
+                  >
+                    Details
+                  </button>
+                  <button
+                    className="bg-pink-500 text-white rounded p-1 hover:bg-pink-700 font-semibold transition-colors duration-300"
+                    onClick={() => removeFromWishlist(product.id)}
+                  >
+                    <RiDeleteBin5Fill className="w-full text-center text-3xl" />
+                  </button>
+                  <button
+                    className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1"
+                    onClick={() => handleAddToCart(product)}
+                  >
+                    Add
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-      {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 px-3">
-          <div className="bg-white p-4 rounded-lg max-w-md w-full text-center relative">
-            <img
-              className="rounded-t-lg w-full object-cover"
-              src={CurrentImage}
-              alt={CurrentImage}
-            />
-            <h2 className="text-lg font-bold mb-2">{currentName}</h2>
-            <p>{currentDescription}</p>
-            <button
-              className="text-pink-500 hover:text-pink-700 text-3xl rounded p-1 mt-4"
-              onClick={closeModal}
-            >
-              <IoMdCloseCircle />
-            </button>
-          </div>
+          ))}
         </div>
-      )}
+        {showModal && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 px-3">
+            <div className="bg-white p-4 rounded-lg max-w-md w-full text-center relative">
+              <img
+                className="rounded-t-lg w-full object-cover"
+                src={CurrentImage}
+                alt={CurrentImage}
+              />
+              <h2 className="text-lg font-bold mb-2">{currentName}</h2>
+              <p>{currentDescription}</p>
+              <button
+                className="text-pink-500 hover:text-pink-700 text-3xl rounded p-1 mt-4"
+                onClick={closeModal}
+              >
+                <IoMdCloseCircle />
+              </button>
+            </div>
+          </div>
+        )}
 
-      {/* الفلاتر */}
-      <div className="flex justify-between items-center mt-6">
-        <div className="flex items-center space-x-4">
-          <label htmlFor="size" className="text-lg">
-            Size:
-          </label>
-          <select id="size" className="p-2 border border-gray-300 rounded-lg">
-            <option value="all">All</option>
-            <option value="s">Small</option>
-            <option value="m">Mediam</option>
-            <option value="l">Large</option>
-          </select>
-        </div>
-        <div className="flex items-center space-x-4">
-          <label htmlFor="price" className="text-lg">
-            Price:
-          </label>
-          <select id="price" className="p-2 border border-gray-300 rounded-lg">
-            <option value="all">All</option>
-            <option value="0-100">0-100</option>
-            <option value="100-500">100-500</option>
-            <option value="500+">over than 500</option>
-          </select>
+        {/* الفلاتر */}
+        <div className="flex justify-between items-center mt-6">
+          <div className="flex items-center space-x-4">
+            <label htmlFor="size" className="text-lg">
+              Size:
+            </label>
+            <select id="size" className="p-2 border border-gray-300 rounded-lg">
+              <option value="all">All</option>
+              <option value="s">Small</option>
+              <option value="m">Mediam</option>
+              <option value="l">Large</option>
+            </select>
+          </div>
+          <div className="flex items-center space-x-4">
+            <label htmlFor="price" className="text-lg">
+              Price:
+            </label>
+            <select
+              id="price"
+              className="p-2 border border-gray-300 rounded-lg"
+            >
+              <option value="all">All</option>
+              <option value="0-100">0-100</option>
+              <option value="100-500">100-500</option>
+              <option value="500+">over than 500</option>
+            </select>
+          </div>
         </div>
       </div>
-    </div>
     </ProtectedRoute>
   );
 }

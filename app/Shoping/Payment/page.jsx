@@ -26,7 +26,7 @@ export default function PaymentPage() {
               <div className="flex justify-between items-center mb-4" key={product.id}>
                 <div className="flex items-center space-x-4">
                   <img
-                    src={product.imageUrl}
+                    src={product.imageUrls?.[0] || "/placeholder.png"}
                     alt={product.name}
                     className="w-32 h-32 rounded-lg"
                   />

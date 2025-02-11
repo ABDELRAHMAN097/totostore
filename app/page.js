@@ -15,8 +15,25 @@ import Link from "next/link";
 const page = () => {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
-  const { addToWishlist } = useCart();
+  const { addToCart, cartItems, addToWishlist } = useCart();
 
+   // Add product to shopping cart
+   const handleAddToCart = (product) => {
+    addToCart(product);
+    localStorage.setItem("cartItems", JSON.stringify([...cartItems, product]));
+    toast.success(
+      <div>
+        <span className="text-green-500">{product.name}</span> has been added to
+        your cart!
+      </div>,
+      {
+        position: "top-right",
+        autoClose: 2000,
+      }
+    );
+  };
+  
+  // Add product to Wishlist
   const handleAddToWishlist = (product) => {
     addToWishlist(product);
   };
@@ -77,8 +94,7 @@ const page = () => {
               const discountAmount = (product.price * product.discount) / 100;
               const newPrice = product.price - discountAmount;
               return (
-                <Link href={`/DetailsProduct/${product.id}`} key={product.id}>
-                  <div className="border relative my-2 mx-1 w-[300px] md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[363px] md:min-h-[230px]">
+                <div className="border relative my-2 mx-1 w-[300px] md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[363px] md:min-h-[230px]">
                     <div>
                     <img
                       className="rounded-t-lg w-full h-[250px] md:h-48 object-cover"
@@ -86,6 +102,7 @@ const page = () => {
                       alt={product.name}
                     />
                     </div>
+                    <Link href={`/DetailsProduct/${product.id}`} key={product.id}>
                     <div className="relative text-right p-2">
                       <h2
                         dir="rtl"
@@ -148,14 +165,20 @@ const page = () => {
                         </motion.div>
                       </div>
                     </div>
+                    </Link>
                     <button
                       className="absolute left-1 top-1 text-gray-500 bg-white rounded p-1"
                       onClick={() => handleAddToWishlist(product)}
                     >
                       <FaRegHeart />
                     </button>
+                    <button
+                      className="absolute left-10 top-1 text-gray-500 bg-white rounded p-1"
+                      onClick={() => handleAddToCart(product)}
+                    >
+                     <GiShoppingCart className="text-pink-500" />
+                    </button>
                   </div>
-                </Link>
               );
             })}
           </div>

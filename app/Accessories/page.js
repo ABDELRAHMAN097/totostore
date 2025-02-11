@@ -7,6 +7,11 @@ import { toast } from "react-toastify";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useCart } from "../CartContext/CartContext.jsx";
 import { FaRegHeart } from "react-icons/fa";
+import { IoIosStar } from "react-icons/io";
+import { GiShoppingCart } from "react-icons/gi";
+import { TbTruckDelivery } from "react-icons/tb";
+import { motion } from "framer-motion";
+import Link from "next/link";
 import ProtectedRoute from "../ProtectedRoute/page";
 
 export default function AccessoriesPage() {
@@ -16,10 +21,7 @@ export default function AccessoriesPage() {
   const [currentDescription, setCurrentDescription] = useState("");
   const [CurrentImage, setCurrentImage] = useState("");
   const [currentName, setcurrentName] = useState("");
-
-  const { addToCart, cartItems } = useCart();
-  const { addToWishlist } = useCart();
-
+  const { addToCart, cartItems, addToWishlist } = useCart();
   const handleAddToWishlist = (product) => {
     addToWishlist(product);
   };
@@ -81,6 +83,17 @@ export default function AccessoriesPage() {
     );
   };
 
+   // (Auto Vertical Carousel)
+   const [currentIndex, setCurrentIndex] = useState(0);
+
+   useEffect(() => {
+     const interval = setInterval(() => {
+       setCurrentIndex((prevIndex) => (prevIndex + 1) % 4); // 3 لأن لدينا 3 عناصر فقط
+     }, 2000); // تغيير كل ثانيتين
+ 
+     return () => clearInterval(interval);
+   }, []);
+
   return (
     <ProtectedRoute>
       <div className="min-h-[44.5vh]">
@@ -117,54 +130,97 @@ export default function AccessoriesPage() {
             </p>
           ) : (
             <div className="products px-2 md:p-0">
-              {products.map((product) => (
-                <div
-                  className="border my-2 mx-1 w-[300px] md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[363px] md:min-h-[280px]"
-                  key={product.id}
-                >
-                  <img
-                    className="rounded-t-lg w-full h-[250px] md:h-48 object-cover"
-                    src={product.imageUrl}
-                    alt={product.name}
-                  />
-                  <div className="text-center p-2">
-                    <h2 className="text-surface dark:text-black">
-                      {product.name}
-                    </h2>
-                    <p className="text-surface dark:text-black">
-                      Price: ${product.price}
-                    </p>
-                    <div className="flex justify-center gap-1 mt-2">
-                      <button
-                        className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1"
-                        onClick={() =>
-                          openModal(
-                            product.description,
-                            product.imageUrl,
-                            product.name
-                          )
-                        }
-                      >
-                        Details
-                      </button>
-
-                      <button
-                        className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1"
-                        onClick={() => handleAddToWishlist(product)}
-                      >
-                        <FaRegHeart />
-                      </button>
-
-                      <button
-                        className="bg-pink-500 hover:bg-pink-700 text-white rounded p-1"
-                        onClick={() => handleAddToCart(product)}
-                      >
-                        Add
-                      </button>
+                {products.map((product) => {
+              const discountAmount = (product.price * product.discount) / 100;
+              const newPrice = product.price - discountAmount;
+              return (
+                <div className="border relative my-2 mx-1 w-[300px] md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[363px] md:min-h-[230px]">
+                    <div>
+                    <img
+                      className="rounded-t-lg w-full h-[250px] md:h-48 object-cover"
+                      src={product.imageUrls?.[0] || "/placeholder.png"}
+                      alt={product.name}
+                    />
                     </div>
+                    <Link href={`/DetailsProduct/${product.id}`} key={product.id}>
+                    <div className="relative text-right p-2">
+                      <h2
+                        dir="rtl"
+                        className="text-gray-800 font-normal text-sm leading-none mb-1 overflow-hidden text-ellipsis line-clamp-2"
+                      >
+                        {product.description}
+                      </h2>
+                      <p className="text-gray-600 font-semibold flex items-center justify-end gap-2 text-right w-full">
+                        <span className="bg-pink-500 text-[12px] text-white text-sm px-[2px] py-[2px] rounded">
+                          -{product.discount}%
+                        </span>
+                        <div className="flex flex-row text-green-400 text-[12px] font-bold">
+                         <p className="mr-1">جنيه</p>
+                         <p>{newPrice.toFixed(2)}</p>
+                        </div>
+                        <span className="line-through text-[12px] text-gray-400">
+                          {product.price.toFixed(2)}
+                        </span>
+                      </p>
+                      <p className="absolute top-[-18px] right-1 text-pink-500 flex items-center text-[14px] font-light">
+                        {product.rating} <IoIosStar className="text-[14px]" />
+                      </p>
+                      {/* Auto Vertical Carousel */}
+                      <div className="h-6 overflow-hidden text-gray-700 font-medium">
+                        <motion.div
+                          key={currentIndex}
+                          initial={{ y: "100%", opacity: 0 }}
+                          animate={{ y: "0%", opacity: 1 }}
+                          exit={{ y: "-100%", opacity: 0 }}
+                          transition={{ duration: 0.5 }}
+                          className="text-right"
+                        >
+                          {
+                            [
+                              <span
+                                key="fast-selling"
+                                className="flex items-center justify-end text-right gap-1"
+                              >
+                                بتخلص بسرعة
+                                <GiShoppingCart className="text-pink-500" />{" "}
+                              </span>,
+                              <span key="stock" className="text-[14px]">
+                                {product.stock} عدد القطع المتاحة
+                              </span>,
+                              <span
+                                key="discount"
+                                className="text-[14px] text-green-400"
+                              >
+                                {product.brand}
+                              </span>,
+                              <span
+                                key="delivery"
+                                className="flex items-center justify-end text-right gap-1"
+                              >
+                                توصيل مجاني
+                                <TbTruckDelivery className="text-pink-500" />{" "}
+                              </span>,
+                            ][currentIndex]
+                          }
+                        </motion.div>
+                      </div>
+                    </div>
+                    </Link>
+                    <button
+                      className="absolute left-1 top-1 text-gray-500 bg-white rounded p-1"
+                      onClick={() => handleAddToWishlist(product)}
+                    >
+                      <FaRegHeart />
+                    </button>
+                    <button
+                      className="absolute left-10 top-1 text-gray-500 bg-white rounded p-1"
+                      onClick={() => handleAddToCart(product)}
+                    >
+                     <GiShoppingCart className="text-pink-500" />
+                    </button>
                   </div>
-                </div>
-              ))}
+              );
+            })}
             </div>
           )}
         </div>
