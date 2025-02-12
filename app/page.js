@@ -139,7 +139,7 @@ const page = () => {
                             [
                               <span
                                 key="fast-selling"
-                                className="flex items-center justify-end text-right gap-1"
+                                className="flex items-center justify-end border gap-1"
                               >
                                 بتخلص بسرعة
                                 <GiShoppingCart className="text-pink-500" />{" "}
@@ -155,7 +155,7 @@ const page = () => {
                               </span>,
                               <span
                                 key="delivery"
-                                className="flex items-center justify-end text-right gap-1"
+                                className="flex items-center justify-end gap-1"
                               >
                                 توصيل مجاني
                                 <TbTruckDelivery className="text-pink-500" />{" "}
