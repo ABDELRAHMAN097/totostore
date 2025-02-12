@@ -12,7 +12,7 @@ import { GiShoppingCart } from "react-icons/gi";
 import { TbTruckDelivery } from "react-icons/tb";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import ProtectedRoute from "../ProtectedRoute/page";
+
 
 export default function AccessoriesPage() {
   const [loading, setLoading] = useState(false);
@@ -95,7 +95,6 @@ export default function AccessoriesPage() {
    }, []);
 
   return (
-    <ProtectedRoute>
       <div className="min-h-[44.5vh]">
         {loading && (
           <div className="loading-overlay">
@@ -245,6 +244,5 @@ export default function AccessoriesPage() {
           </div>
         )}
       </div>
-    </ProtectedRoute>
   );
 }
