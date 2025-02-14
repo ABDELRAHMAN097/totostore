@@ -111,7 +111,7 @@ const page = () => {
                     <div className="relative text-right p-2">
                       <h2
                         dir="rtl"
-                        className="text-gray-800 font-normal text-sm leading-none mb-1 overflow-hidden text-ellipsis line-clamp-2"
+                        className="text-gray-800 font-normal text-sm leading-none mb-1 py-1 overflow-hidden text-ellipsis line-clamp-2"
                       >
                         {product.description}
                       </h2>
@@ -144,7 +144,7 @@ const page = () => {
                             [
                               <span
                                 key="fast-selling"
-                                className="flex items-center justify-end text-right gap-1"
+                                className="flex items-center justify-end gap-1"
                               >
                                 بتخلص بسرعة
                                 <GiShoppingCart className="text-pink-500" />{" "}
@@ -160,7 +160,7 @@ const page = () => {
                               </span>,
                               <span
                                 key="delivery"
-                                className="flex items-center justify-end text-right gap-1"
+                                className="flex items-center justify-end gap-1"
                               >
                                 توصيل مجاني
                                 <TbTruckDelivery className="text-pink-500" />{" "}

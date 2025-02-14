@@ -4,7 +4,6 @@ import { useCart } from "../CartContext/CartContext"; // ضع المسار ال�
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { toast } from "react-toastify";
 import { IoMdCloseCircle } from "react-icons/io";
-import ProtectedRoute from "../ProtectedRoute/page";
 
 export default function Page() {
   const { addToCart, cartItems } = useCart();
@@ -43,7 +42,6 @@ export default function Page() {
   };
 
   return (
-    <ProtectedRoute>
       <div className="container min-h-[44.5vh] mx-auto p-2">
         <h1 className="text-3xl my-5 font-semibold text-center">Wishlist</h1>
         <div className="products px-2 md:p-0">
@@ -141,7 +139,6 @@ export default function Page() {
           </div>
         </div>
       </div>
-    </ProtectedRoute>
   );
 }
 

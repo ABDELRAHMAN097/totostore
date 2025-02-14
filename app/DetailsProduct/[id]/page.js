@@ -110,7 +110,7 @@ const ProductDetails = () => {
       </div>
 
       {/* عرض الصور */}
-      <div className="flex md:w-1/2">
+      <div className="flex md:w-1/2 mt-3 md:mt-0">
         {/* الصورة الكبيرة على الشمال */}
         <div className="w-3/4">
           <img
