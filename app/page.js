@@ -124,7 +124,7 @@ const page = () => {
                           <p>{newPrice.toFixed(2)}</p>
                         </div>
                         <span className="line-through text-[12px] text-gray-400">
-                          {product.price.toFixed(2)}
+                        {parseFloat(product.price).toFixed(2)}
                         </span>
                       </p>
                       <p className="absolute top-[-18px] right-1 text-pink-500 flex items-center text-[14px] font-light">
