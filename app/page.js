@@ -10,15 +10,16 @@ import { FaRegHeart } from "react-icons/fa";
 import { GiShoppingCart } from "react-icons/gi";
 import { TbTruckDelivery } from "react-icons/tb";
 import { useCart } from "../app/CartContext/CartContext";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const { addToCart, cartItems, addToWishlist } = useCart();
+  const router = useRouter();
 
-   // Add product to shopping cart
-   const handleAddToCart = (product) => {
+  // Add product to shopping cart
+  const handleAddToCart = (product) => {
     addToCart(product);
     localStorage.setItem("cartItems", JSON.stringify([...cartItems, product]));
     toast.success(
@@ -32,7 +33,7 @@ const page = () => {
       }
     );
   };
-  
+
   // Add product to Wishlist
   const handleAddToWishlist = (product) => {
     addToWishlist(product);
@@ -94,15 +95,19 @@ const page = () => {
               const discountAmount = (product.price * product.discount) / 100;
               const newPrice = product.price - discountAmount;
               return (
-                <div className="border relative my-2 mx-1 w-[300px] md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[363px] md:min-h-[230px]">
+                <div
+                  onClick={() => router.push(`/DetailsProduct/${product.id}`)} // ✅ توجيه عند الضغط على البطاقة
+                  className="border relative my-2 mx-1 w-[300px] md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[363px] md:min-h-[230px] cursor-pointer"
+                >
+                  {" "}
+                  <div>
                     <div>
-                    <img
-                      className="rounded-t-lg w-full h-[250px] md:h-48 object-cover"
-                      src={product.imageUrls?.[0] || "/placeholder.png"}
-                      alt={product.name}
-                    />
+                      <img
+                        className="rounded-t-lg w-full h-[250px] md:h-48 object-cover"
+                        src={product.imageUrls?.[0] || "/placeholder.png"}
+                        alt={product.name}
+                      />
                     </div>
-                    <Link href={`/DetailsProduct/${product.id}`} key={product.id}>
                     <div className="relative text-right p-2">
                       <h2
                         dir="rtl"
@@ -115,8 +120,8 @@ const page = () => {
                           -{product.discount}%
                         </span>
                         <div className="flex flex-row text-green-400 text-[12px] font-bold">
-                         <p className="mr-1">جنيه</p>
-                         <p>{newPrice.toFixed(2)}</p>
+                          <p className="mr-1">جنيه</p>
+                          <p>{newPrice.toFixed(2)}</p>
                         </div>
                         <span className="line-through text-[12px] text-gray-400">
                           {product.price.toFixed(2)}
@@ -165,20 +170,28 @@ const page = () => {
                         </motion.div>
                       </div>
                     </div>
-                    </Link>
                     <button
                       className="absolute left-1 top-1 text-gray-500 bg-white rounded p-1"
-                      onClick={() => handleAddToWishlist(product)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation(); // توقف انتشار الحدث
+                        handleAddToWishlist(product); // نفذ الدالة المطلوبة
+                      }}
                     >
                       <FaRegHeart />
                     </button>
                     <button
                       className="absolute left-10 top-1 text-gray-500 bg-white rounded p-1"
-                      onClick={() => handleAddToCart(product)}
+                      onClick={(e) => {
+                        e.preventDefault(); // منع السلوك الافتراضي
+                        e.stopPropagation(); // منع انتشار الحدث
+                        handleAddToCart(product); // نفذ الدالة المطلوبة
+                      }}
                     >
-                     <GiShoppingCart className="text-pink-500" />
+                      <GiShoppingCart className="text-pink-500" />
                     </button>
                   </div>
+                </div>
               );
             })}
           </div>
