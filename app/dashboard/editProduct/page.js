@@ -19,7 +19,7 @@ const EditProduct = () => {
 
   useEffect(() => {
     if (!loading && userRole !== "admin") {
-      router.push("/403"); // منع الوصول لغير الأدمن
+      router.push("/403");
     }
   }, [userRole, loading, router]);
 
@@ -47,38 +47,47 @@ const EditProduct = () => {
   };
 
   const handleImageChange = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const storageRef = ref(storage, `productImages/${file.name}`);
-
+    const files = e.target.files;
+    if (!files.length) return;
+  
+    const uploadedImages = [...(editingProduct.imageUrls || [])]; // الاحتفاظ بالصور القديمة
+  
     try {
-      await uploadBytes(storageRef, file);
-      const imageUrl = await getDownloadURL(storageRef);
-      setEditingProduct((prev) => ({ ...prev, imageUrl })); // تحديث رابط الصورة الجديدة
+      for (const file of files) {
+        const storageRef = ref(storage, `productImages/${file.name}`);
+        await uploadBytes(storageRef, file);
+        const imageUrl = await getDownloadURL(storageRef);
+        uploadedImages.push(imageUrl); // إضافة الصورة الجديدة للمصفوفة
+      }
+  
+      setEditingProduct((prev) => ({ ...prev, imageUrls: uploadedImages }));
     } catch (error) {
-      console.error("خطأ في رفع الصورة:", error);
+      console.error("خطأ في رفع الصور:", error);
     }
   };
-
+  
   const handleSaveEdit = async () => {
     try {
       const productRef = doc(db, "products", editingProduct.id);
       await updateDoc(productRef, {
         name: editingProduct.name,
+        brand: editingProduct.brand,
+        stock: editingProduct.stock,
+        rating: editingProduct.rating,
         price: editingProduct.price,
         description: editingProduct.description,
         category: editingProduct.category,
-        imageUrl: editingProduct.imageUrl, // تحديث الصورة الجديدة
+        imageUrls: editingProduct.imageUrls || [], // تحديث الصور كمصفوفة
       });
-
-      fetchProducts(); // تحديث قائمة المنتجات
-      setEditingProduct(null); // إلغاء وضع التعديل
+  
+      await fetchProducts(); // تحديث المنتجات بعد التعديل
+      setEditingProduct(null);
       console.log("تم تعديل المنتج بنجاح");
     } catch (error) {
       console.error("خطأ في تعديل المنتج:", error);
     }
   };
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -118,27 +127,39 @@ const EditProduct = () => {
                 />
               </div>
 
-              <div className="flex-1 ml-0 md:ml-4">
+              <div className="flex-1 ml-0 md:ml-1">
                 <h2 className="text-xl font-bold">{product.name}</h2>
               </div>
 
-              <div className="flex-1 ml-0 md:ml-4">
+              <div className="flex-1 ml-0 md:ml-1">
+                <h2 className="text-xl font-bold">{product.brand}</h2>
+              </div>
+
+              <div className="flex-1 ml-0 md:ml-1">
+                <h2 className="text-xl font-bold">{product.stock}</h2>
+              </div>
+
+              <div className="flex-1 ml-0 md:ml-1">
+                <h2 className="text-xl font-bold">{product.rating}</h2>
+              </div>
+
+              <div className="flex-1 ml-0 md:ml-1">
                 <p className="text-gray-500">Price: ${product.price}</p>
               </div>
 
-              <div className="flex-1 ml-0 md:ml-4">
+              <div className="flex-1 ml-0 md:ml-1">
                 <p className="text-gray-500">
                   Description: {product.description}
                 </p>
               </div>
 
-              <div className="flex-1 ml-0 md:ml-4">
+              <div className="flex-1 ml-0 md:ml-1">
                 <p className="text-gray-500">Category: {product.category}</p>
               </div>
 
               <div>
                 <button
-                  className="mt-4 text-center p-2 bg-pink-500 text-white rounded-lg"
+                  className="mt-2 text-center p-2 bg-pink-500 text-white rounded-lg"
                   onClick={() => handleEditProduct(product.id)}
                 >
                   Edit
@@ -170,6 +191,39 @@ const EditProduct = () => {
               type="text"
               name="name"
               value={editingProduct.name}
+              onChange={handleChange}
+              className="w-full p-2 border rounded"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block mb-2">brand</label>
+            <input
+              type="text"
+              name="brand"
+              value={editingProduct.brand}
+              onChange={handleChange}
+              className="w-full p-2 border rounded"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block mb-2">stock</label>
+            <input
+              type="text"
+              name="stock"
+              value={editingProduct.stock}
+              onChange={handleChange}
+              className="w-full p-2 border rounded"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block mb-2">rating</label>
+            <input
+              type="text"
+              name="rating"
+              value={editingProduct.rating}
               onChange={handleChange}
               className="w-full p-2 border rounded"
             />
