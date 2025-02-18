@@ -11,6 +11,7 @@ import { GiShoppingCart } from "react-icons/gi";
 import { TbTruckDelivery } from "react-icons/tb";
 import { useCart } from "../app/CartContext/CartContext";
 import { useRouter } from "next/navigation";
+import Home from "./pages/Home";
 
 const page = () => {
   const [loading, setLoading] = useState(false);
@@ -82,6 +83,8 @@ const page = () => {
           <BarLoader color={"#d60096"} loading={loading} size={350} />
         </div>
       )}
+
+      <Home/>
 
       <h3 id="products-section" className="ml-5 my-5 text-gray-500">
         Trendy clothes
