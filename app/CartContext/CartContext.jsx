@@ -64,9 +64,14 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromWishlist = (id) => {
-    setWishlistItems((prevItems) => prevItems.filter((item) => item.id !== id));
+    setWishlistItems((prevItems) => {
+      const updatedItems = prevItems.filter((item) => item.id !== id);
+      console.log("After remove:", updatedItems); // هنا بنطبع بعد التحديث مباشرة
+      return updatedItems;
+    });
     toast.error("Removed from wishlist");
   };
+  
 
   const increaseQuantity = (id) => {
     setCartItems((prevItems) =>
