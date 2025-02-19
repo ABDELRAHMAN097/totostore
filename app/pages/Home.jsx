@@ -1,21 +1,47 @@
-import Image from 'next/image'
-import React from 'react'
+"use client";
+
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+import Image from "next/image";
+
+const images = [
+  "/image/offer.png",
+  "/image/kkk.png",
+  "/image/kk.png",
+];
 
 const Home = () => {
-  return (
-    <div className='mx-5'>
-        <div className='w-full'>
-            <Image 
-                src="/image/cursor1.png" 
-                alt="Hero Image" 
-                layout="responsive" 
-                width={1920} 
-                height={1080} 
-                objectFit="cover"
-            />
-        </div>
-    </div>
-  )
-}
+  const [index, setIndex] = useState(0);
 
-export default Home
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % images.length);
+    }, 3000); // تغيير الصورة كل 3 ثواني
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative w-full h-[50vh] md:h-[80vh] overflow-hidden">
+      <AnimatePresence>
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -100 }}
+          transition={{ duration: 0.8 }}
+          className="absolute w-full h-full"
+        >
+          <Image
+            src={images[index]}
+            alt="Slider Image"
+            layout="fill"
+            objectFit="cover"
+            className="w-full h-full"
+          />
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+};
+
+export default Home;
