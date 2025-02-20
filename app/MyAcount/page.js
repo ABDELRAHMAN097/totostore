@@ -20,7 +20,9 @@ const ProfilePage = () => {
 
   if (!user) {
     return (
-      <div className="w-full flex flex-col items-center justify-center p-4 h-[79vh] gap-5 bg-slate-950">
+      <div 
+      style={{ minHeight: `calc(100vh - 140px - 65px - 68.3906px)` }}
+      className="flex flex-col items-center justify-center bg-slate-950 p-5">
        <FaPowerOff className="text-white text-center text-5xl"/>
         <p className="w-full text-white text-center text-xl">
           You must be logged in to view the profile
@@ -30,7 +32,8 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="max-w-sm mx-auto mt-10 p-6 bg-white border border-2 shadow-lg rounded-lg text-center relative">
+    <div 
+    className="max-w-sm mx-auto mt-10 p-6 bg-white border-2 shadow-lg rounded-lg text-center relative m-1">
       {/* go back */}
       <div className="absolute left-3 top-3">
         <Link href="/">

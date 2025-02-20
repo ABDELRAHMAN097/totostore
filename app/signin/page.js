@@ -48,15 +48,17 @@ export default function Signin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div 
+    style={{ minHeight: "calc(100vh - 277.39px)" }}
+    className="flex items-center justify-center bg-gray-100">
       <div className="flex flex-col md:flex-row w-full max-w-4xl shadow-lg bg-white rounded-md">
         <div className="md:w-1/2 flex flex-col justify-center items-center bg-[#CBE4E8] rounded-tl-md rounded-bl-md">
-          <img src="/image/login.png" alt="Signin" className="w-3/4 mb-4" />
+          <img src="/image/login.png" alt="Signin" className="w-3/4 mb-3" />
           <h2 className="text-xl font-bold text-gray-700 text-center">Welcome Back!</h2>
         </div>
         <form onSubmit={handleSignin} className="md:w-1/2 p-5">
-          <h2 className="text-2xl font-bold mb-4 text-pink-500">Sign in to your account</h2>
-          <p className="mb-3 text-gray-600">Enter your credentials below</p>
+          <h2 className="text-2xl font-bold mb-3 text-pink-500">Sign in to your account</h2>
+          <p className="mb-2 text-gray-600">Enter your credentials below</p>
           <input
             type="email"
             placeholder="Email"

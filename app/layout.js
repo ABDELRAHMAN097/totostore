@@ -25,7 +25,9 @@ export default function RootLayout({ children }) {
             <Navbar />
 
               {/* Main content area with flex */}
-              <div className="flex flex-col mt-3 min-h-[52.3vh]">
+              <div 
+              style={{ minHeight: `calc(100vh - 140px - 65px - 68.3906px)` }}
+              className="flex flex-col">
               {/* This div takes up remaining space */}
               <div className="flex-grow">
                 {children}

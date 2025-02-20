@@ -62,7 +62,9 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div 
+    style={{ minHeight: "calc(100vh - 277.39px)" }}
+    className="flex items-center justify-center p-5 bg-gray-100">
       <div className="flex flex-col md:flex-row w-full max-w-4xl shadow-lg bg-white rounded-md">
         <div className="md:w-1/2 flex flex-col justify-center items-center bg-[#CBE4E8] rounded-tl-md rounded-bl-md">
           <img src="/image/login.png" alt="Signup" className="w-3/4 mb-4" />
