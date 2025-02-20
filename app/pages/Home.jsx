@@ -34,9 +34,11 @@ const Home = () => {
           <Image
             src={images[index]}
             alt="Slider Image"
-            layout="fill"
+            layout="responsive"
             objectFit="cover"
             className="w-full h-full"
+            width={100}
+            height={100}
           />
         </motion.div>
       </AnimatePresence>
