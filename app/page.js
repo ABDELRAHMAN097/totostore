@@ -84,7 +84,9 @@ const page = () => {
         </div>
       )}
 
+      <div className="px-1">
       <Home/>
+      </div>
 
       <div className=" text-gray-500 pl-1 my-2">
       <h3 id="products-section" className="text-gray-500">
