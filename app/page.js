@@ -86,27 +86,29 @@ const page = () => {
 
       <Home/>
 
-      <h3 id="products-section" className="ml-5 my-5 text-gray-500">
+      <div className=" text-gray-500 pl-1 my-2">
+      <h3 id="products-section" className="text-gray-500">
         Trendy clothes
       </h3>
+      </div>
       <div>
         {products.length === 0 ? (
           <p className="text-center text-gray-500">No products found ... !</p>
         ) : (
-          <div className="products px-2 md:p-0">
+          <div className="products px-1 md:p-0">
             {products.map((product) => {
               const discountAmount = (product.price * product.discount) / 100;
               const newPrice = product.price - discountAmount;
               return (
                 <div
                   onClick={() => router.push(`/DetailsProduct/${product.id}`)} // ✅ توجيه عند الضغط على البطاقة
-                  className="border relative my-2 mx-1 w-[300px] md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[363px] md:min-h-[230px] cursor-pointer"
+                  className="border relative my-2 mx-1 w-full md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[369px] md:min-h-[230px] cursor-pointer"
                 >
                   {" "}
                   <div>
                     <div>
                       <img
-                        className="rounded-t-lg w-full h-[250px] md:h-48 object-cover"
+                        className="rounded-t-lg w-full h-[265px] md:h-48 object-cover"
                         src={product.imageUrls?.[0] || "/placeholder.png"}
                         alt={product.name}
                       />
