@@ -21,7 +21,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-[50vh] md:h-[80vh] overflow-hidden">
+    <div className="relative w-full h-[18vh] md:h-[80vh] overflow-hidden">
       <AnimatePresence>
         <motion.div
           key={index}
