@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
             <Navbar />
 
               {/* Main content area with flex */}
-              <div className="flex flex-col my-3 min-h-[52.3vh]">
+              <div className="flex flex-col mt-3 min-h-[52.3vh]">
               {/* This div takes up remaining space */}
               <div className="flex-grow">
                 {children}
