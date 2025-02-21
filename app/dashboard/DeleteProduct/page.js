@@ -2,28 +2,34 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../../firebase";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
-import { BarLoader } from "react-spinners";
+import { BarLoader, BeatLoader } from "react-spinners";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import ProtectedRoute from "../../ProtectedRoute/page";
 import { useRouter } from "next/navigation";
 import { useUser } from "../../context/UserContext";
 import SearchBar from "@/app/Components/SearchBar ";
+import { toast } from "react-toastify";
 
 const DeleteProduct = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [load, setLoad] = useState(false);
 
   const fetchProducts = async () => {
     try {
+      setLoad(true);
       const querySnapshot = await getDocs(collection(db, "products"));
       const productsData = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
+      toast.success("The product has been removed");
       setProducts(productsData);
-      setFilteredProducts(productsData); // عند جلب البيانات، نقوم بتمريرها إلى filteredProducts
+      setFilteredProducts(productsData);
     } catch (error) {
       console.error("خطأ في جلب المنتجات:", error);
+    } finally {
+      setLoad(false);
     }
   };
 
@@ -33,14 +39,17 @@ const DeleteProduct = () => {
 
   const handleDeleteProduct = async (productId) => {
     try {
+      setLoad((prev) => ({ ...prev, [productId]: true }));
       await deleteDoc(doc(db, "products", productId));
       setProducts(products.filter((product) => product.id !== productId));
       setFilteredProducts(
         filteredProducts.filter((product) => product.id !== productId)
       ); // تحديث المنتجات المفلترة بعد الحذف
-      console.log("تم حذف المنتج بالمعرف:", productId);
+      toast.success(`The product has been removed with id: ${productId}`);
     } catch (error) {
-      console.error("خطأ في حذف المنتج:", error);
+      console.error("you have error :", error);
+    } finally {
+      setLoad((prev) => ({ ...prev, [productId]: false }));
     }
   };
 
@@ -108,9 +117,14 @@ const DeleteProduct = () => {
                 <div>
                   <button
                     className="mt-4 text-center p-2 bg-red-500 text-white rounded-lg"
+                    disabled={load}
                     onClick={() => handleDeleteProduct(product.id)}
                   >
-                    <RiDeleteBin5Fill className="w-full text-center" />
+                    {load[product.id] ? (
+                      <BeatLoader color="#fff" size={8} />
+                    ) : (
+                      <RiDeleteBin5Fill className="w-full text-center" />
+                    )}
                   </button>
                 </div>
               </div>

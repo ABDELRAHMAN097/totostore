@@ -104,7 +104,7 @@ const page = () => {
               return (
                 <div
                   onClick={() => router.push(`/DetailsProduct/${product.id}`)} // ✅ توجيه عند الضغط على البطاقة
-                  className="border relative my-2 mx-1 w-full md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[369px] md:min-h-[230px] cursor-pointer"
+                  className="border relative my-2 mx-1 w-full md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[363px] md:min-h-[230px] cursor-pointer"
                 >
                   {" "}
                   <div>

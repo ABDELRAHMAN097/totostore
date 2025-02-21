@@ -3,6 +3,10 @@ import React, { useState } from "react";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { addDoc, collection } from "firebase/firestore";
 import { db, storage } from "../firebase"; // تأكد من صحة المسار
+import { toast } from "react-toastify";
+import { BeatLoader } from "react-spinners";
+
+
 export default function AddProducts() {
   const [files, setFiles] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
@@ -10,10 +14,11 @@ export default function AddProducts() {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Men");
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState("");
   const [stock, setStock] = useState(1);
   const [brand, setBrand] = useState("");
-  const [discount, setDiscount] = useState(0);
+  const [discount, setDiscount] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const uploadProductImages = async (files) => {
     if (!files.length) throw new Error("لا توجد ملفات للرفع.");
@@ -29,16 +34,19 @@ export default function AddProducts() {
 
   const addProductWithImages = async (productData) => {
     try {
+      setLoading(true);
       const imageUrls = await uploadProductImages(files);
       const docRef = await addDoc(collection(db, "products"), {
         ...productData,
         imageUrls,
       });
-      console.log("تم إضافة المنتج بالمعرف:", docRef.id);
+      toast.success(`The product has been added with the ID: ${docRef.id}`);
       return true;
     } catch (error) {
       console.error("خطأ في إضافة المنتج:", error);
       return false;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -171,10 +179,11 @@ export default function AddProducts() {
         onChange={handleFileChange}
       />
       <button
-        className="block w-full p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+        className="block w-full p-2 bg-pink-500 text-white rounded-lg hover:bg-pink-700 transition"
+        disabled={loading}
         onClick={handleAddProduct}
       >
-        إضافة المنتج
+        {loading ? <BeatLoader color="#fff" size={8} /> : "إضافة المنتج"}{" "}
       </button>
     </div>
   );
