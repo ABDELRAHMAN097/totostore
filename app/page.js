@@ -12,6 +12,7 @@ import { TbTruckDelivery } from "react-icons/tb";
 import { useCart } from "../app/CartContext/CartContext";
 import { useRouter } from "next/navigation";
 import Home from "./pages/Home";
+import Navbar from "./Components/Navbar";
 
 const page = () => {
   const [loading, setLoading] = useState(false);
@@ -83,7 +84,7 @@ const page = () => {
           <BarLoader color={"#d60096"} loading={loading} size={350} />
         </div>
       )}
-
+      <Navbar />
       <div className="px-1">
       <Home/>
       </div>

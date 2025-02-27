@@ -5,7 +5,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CartProvider } from "../app/CartContext/CartContext.jsx";
 import { UserProvider } from "./context/UserContext";
-import Navbar from "./Components/Navbar";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 
@@ -22,11 +21,9 @@ export default function RootLayout({ children }) {
             {/* header */}
             <Header />
             {/* nav */}
-            <Navbar />
-
               {/* Main content area with flex */}
               <div 
-              style={{ minHeight: `calc(100vh - 140px - 65px - 68.3906px)` }}
+              style={{ minHeight: `calc(100vh - 140px - 68.3906px)` }}
               className="flex flex-col">
               {/* This div takes up remaining space */}
               <div className="flex-grow">

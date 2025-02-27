@@ -45,15 +45,6 @@ const Header = () => {
         </div>
       </a>
 
-      {/* <div className="flex flex-1 items-center justify-center mx-2 sm:mx-4 md:mx-6 relative">
-        <input
-          className="w-full p-2 pl-10 pr-4 text-sm border border-gray-300 rounded-full focus:outline-none focus:border-pink-500 md:text-base lg:p-3"
-          type="text"
-          placeholder="Search..."
-        />
-        <FaSearch className="absolute left-3 text-gray-400" />
-      </div> */}
-
       <div className="flex items-center gap-3">
         {!user ? (
           <Link
@@ -64,7 +55,7 @@ const Header = () => {
           </Link>
         ) : (
           <div className="relative" ref={dropdownRef}>
-            {/* صورة البروفايل مع الحدث */}
+            {/* update profile photo / state */}
             <div
               className="relative cursor-pointer"
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
