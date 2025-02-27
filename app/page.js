@@ -119,10 +119,16 @@ const page = () => {
                     <div className="relative text-right p-2">
                       <h2
                         dir="rtl"
+                        className="text-gray-800 font-normal text-sm leading-none mb-1 overflow-hidden text-ellipsis line-clamp-2"
+                      >
+                        {product.name}
+                      </h2>
+                      <h3
+                        dir="rtl"
                         className="text-gray-800 font-normal text-sm leading-none mb-1 py-1 overflow-hidden text-ellipsis line-clamp-2"
                       >
                         {product.description}
-                      </h2>
+                      </h3>
                       <p className="text-gray-600 font-semibold flex items-center justify-end gap-2 text-right w-full">
                         <span className="bg-pink-500 text-[12px] text-white text-sm px-[2px] py-[2px] rounded">
                           -{product.discount}%
