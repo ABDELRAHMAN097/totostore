@@ -5,9 +5,9 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 
 const images = [
-  "/image/offer.png",
-  "/image/kkk.png",
-  "/image/kk.png",
+  "/image/s1.png",
+  "/image/s2.png",
+  "/image/s3.png",
 ];
 
 const Home = () => {
