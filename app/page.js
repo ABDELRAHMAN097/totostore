@@ -59,12 +59,7 @@ const page = () => {
     fetchProducts();
   }, []);
 
-  const scrollToProducts = () => {
-    const section = document.getElementById("products-section");
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+ 
 
   // (Auto Vertical Carousel)
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -98,14 +93,14 @@ const page = () => {
         {products.length === 0 ? (
           <p className="text-center text-gray-500">No products found ... !</p>
         ) : (
-          <div className="products px-1 md:p-0">
+          <div className="grid grid-cols-2 gap-1 px-2 md:px-0 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 place-items-center">
             {products.map((product) => {
               const discountAmount = (product.price * product.discount) / 100;
               const newPrice = product.price - discountAmount;
               return (
                 <div
-                  onClick={() => router.push(`/DetailsProduct/${product.id}`)} // ✅ توجيه عند الضغط على البطاقة
-                  className="border relative my-2 mx-1 w-full md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[363px] md:min-h-[230px] cursor-pointer"
+                  onClick={() => router.push(`/DetailsProduct/${product.id}`)} 
+                  className="border relative my-2 w-full md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[363px] md:min-h-[230px] cursor-pointer"
                 >
                   {" "}
                   <div>
