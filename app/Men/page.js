@@ -70,7 +70,7 @@ export default function MenProductsPage() {
         {products.length === 0 ? (
           <p className="text-center text-gray-500">No products found ... !</p>
         ) : (
-          <div className="products px-2 md:p-0">
+          <div className="grid grid-cols-2 gap-1 px-2 md:px-0 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 place-items-center">
             {products.map((product) => {
               const discountAmount = (product.price * product.discount) / 100;
               const newPrice = product.price - discountAmount;
@@ -100,7 +100,7 @@ export default function MenProductsPage() {
                          <p>{newPrice.toFixed(2)}</p>
                         </div>
                         <span className="line-through text-[12px] text-gray-400">
-                          {product.price.toFixed(2)}
+                        {parseFloat(product.price).toFixed(2)}
                         </span>
                       </p>
                       <p className="absolute top-[-18px] right-1 text-pink-500 flex items-center text-[14px] font-light">
