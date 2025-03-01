@@ -107,8 +107,8 @@ export default function AccessoriesPage() {
           style={{ backgroundImage: "url('/image/Accessories cover.png')" }}
         >
           <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white">
-            <h1 className="text-4xl font-bold mb-4">Welcome to Toto Store</h1>
-            <h2 className="text-2xl mb-6">Accessories collection</h2>
+            <h1 className="text-4xl text-center font-bold mb-4">Welcome to Toto Store</h1>
+            <h2 className="text-2xl text-center mb-6">Accessories collection</h2>
             <button
               onClick={scrollToProducts}
               className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded"
@@ -128,12 +128,14 @@ export default function AccessoriesPage() {
               No men's products found ... !
             </p>
           ) : (
-            <div className="products px-2 md:p-0">
-                {products.map((product) => {
+            <div className="grid grid-cols-2 gap-1 px-2 md:px-0 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 place-items-center">
+            {products.map((product) => {
               const discountAmount = (product.price * product.discount) / 100;
               const newPrice = product.price - discountAmount;
               return (
-                <div className="border relative my-2 mx-1 w-[300px] md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[363px] md:min-h-[230px]">
+                <Link href={`/DetailsProduct/${product.id}`} key={product.id}>
+                  <div className="border relative my-2 w-full md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[363px] md:min-h-[230px] cursor-pointer"
+                  >
                     <div>
                     <img
                       className="rounded-t-lg w-full h-[250px] md:h-48 object-cover"
@@ -141,7 +143,6 @@ export default function AccessoriesPage() {
                       alt={product.name}
                     />
                     </div>
-                    <Link href={`/DetailsProduct/${product.id}`} key={product.id}>
                     <div className="relative text-right p-2">
                       <h2
                         dir="rtl"
@@ -158,7 +159,7 @@ export default function AccessoriesPage() {
                          <p>{newPrice.toFixed(2)}</p>
                         </div>
                         <span className="line-through text-[12px] text-gray-400">
-                          {product.price.toFixed(2)}
+                        {parseFloat(product.price).toFixed(2)}
                         </span>
                       </p>
                       <p className="absolute top-[-18px] right-1 text-pink-500 flex items-center text-[14px] font-light">
@@ -204,45 +205,19 @@ export default function AccessoriesPage() {
                         </motion.div>
                       </div>
                     </div>
-                    </Link>
                     <button
                       className="absolute left-1 top-1 text-gray-500 bg-white rounded p-1"
                       onClick={() => handleAddToWishlist(product)}
                     >
                       <FaRegHeart />
                     </button>
-                    <button
-                      className="absolute left-10 top-1 text-gray-500 bg-white rounded p-1"
-                      onClick={() => handleAddToCart(product)}
-                    >
-                     <GiShoppingCart className="text-pink-500" />
-                    </button>
                   </div>
+                </Link>
               );
             })}
-            </div>
+          </div>
           )}
         </div>
-
-        {showModal && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 px-3">
-            <div className="bg-white p-4 mt-[20px] rounded-lg max-w-md w-full text-center relative">
-              <img
-                className="rounded-t-lg w-full h-[400px] object-cover"
-                src={CurrentImage}
-                alt={CurrentImage}
-              />
-              <h2 className="text-lg font-bold mt-2">{currentName}</h2>
-              <p>{currentDescription}</p>
-              <button
-                className="text-pink-500 hover:text-pink-700 text-3xl rounded p-1 mt-2"
-                onClick={closeModal}
-              >
-                <IoMdCloseCircle />
-              </button>
-            </div>
-          </div>
-        )}
       </div>
   );
 }

@@ -76,7 +76,8 @@ export default function MenProductsPage() {
               const newPrice = product.price - discountAmount;
               return (
                 <Link href={`/DetailsProduct/${product.id}`} key={product.id}>
-                  <div className="border relative my-2 mx-1 w-[300px] md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[363px] md:min-h-[230px]">
+                  <div className="border relative my-2 w-full md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[363px] md:min-h-[230px] cursor-pointer"
+                  >
                     <div>
                     <img
                       className="rounded-t-lg w-full h-[250px] md:h-48 object-cover"
