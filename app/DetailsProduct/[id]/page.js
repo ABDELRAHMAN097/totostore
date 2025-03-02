@@ -9,6 +9,7 @@ import { GiShoppingCart } from "react-icons/gi";
 import { useCart } from "../../CartContext/CartContext.jsx"; // ضع المسار الصحيح هنا
 import Image from "next/image";
 import { toast } from "react-toastify";
+import { BarLoader } from "react-spinners";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -61,7 +62,9 @@ const ProductDetails = () => {
     fetchProduct();
   }, [id]);
 
-  if (loading) return <p className="text-center">Loading...</p>;
+  if (loading) return <div className="loading-overlay">
+  <BarLoader color={"#d60096"} loading={loading} size={350} />
+</div>;
   if (!product) return <p className="text-center">Product not found!</p>;
 
   const discountAmount = (product.price * product.discount) / 100;
@@ -69,6 +72,11 @@ const ProductDetails = () => {
 
   return (
     <div className="container mx-auto p-4 md:flex md:gap-8">
+      {loading && (
+        <div className="loading-overlay">
+          <BarLoader color={"#d60096"} loading={loading} size={350} />
+        </div>
+      )}
       {/* تفاصيل المنتج */}
       <div className="md:w-1/2 text-end">
         <h2 className="text-pink-500 font-semibold mb-2">{product.brand}</h2>
