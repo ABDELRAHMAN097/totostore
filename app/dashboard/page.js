@@ -8,6 +8,7 @@ import { RiDeleteBin5Fill } from "react-icons/ri";
 import ProtectedRoute from "../ProtectedRoute/page";
 import { useRouter } from "next/navigation";
 import { useUser } from "../context/UserContext";
+import { BarLoader } from "react-spinners";
 
 export default function Page() {
   
@@ -23,9 +24,9 @@ export default function Page() {
   }, [userRole, loading, router]);
 
   // عرض Loading Spinner لحد ما يتم التحقق
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  if (loading) return <div className="loading-overlay">
+  <BarLoader color={"#d60096"} loading={loading} size={350} />
+</div>;
 
   return (
     <ProtectedRoute adminOnly={true}>

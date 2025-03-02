@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "../context/UserContext"; // تأكد من المسار الصحيح
+import { BarLoader } from "react-spinners";
 
 export default function ProtectedRoute({ children, adminOnly = false }) {
   const { user, loading } = useUser();
@@ -18,15 +19,17 @@ export default function ProtectedRoute({ children, adminOnly = false }) {
       router.push("/signin");
     } else if (adminOnly && !user.isAdmin) {
       // إذا كانت الصفحة للإدمن فقط
-      router.push("/");
+      router.push("/out");
     }
   }, [user, loading, adminOnly, router]);
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p>Loading...</p>
-      </div>
+      <>
+        <div className="loading-overlay">
+          <BarLoader color={"#d60096"} loading={loading} size={350} />
+        </div>
+      </>
     );
   }
 
