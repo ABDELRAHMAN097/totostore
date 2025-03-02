@@ -17,7 +17,7 @@ import { FaChalkboardUser } from "react-icons/fa6";
 export default function ManageUsers() {
   const [users, setUsers] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null); // حفظ المستخدم الحالي
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -73,6 +73,33 @@ export default function ManageUsers() {
       console.error("Error updating admin role:", error);
     }
   };
+  // handleDelete
+  const handleDelete = async (uid) => {
+    if (!isAdmin) {
+      console.error("Access denied: You are not an admin.");
+      return;
+    }
+  
+    try {
+      const userRef = doc(db, "users", uid);
+      const userSnap = await getDoc(userRef);
+  
+      if (!userSnap.exists()) {
+        console.error("User not found in Firestore.");
+        return;
+      }
+  
+      console.log("Deleting user:", userSnap.data());
+  
+      await deleteDoc(userRef);
+      setUsers(users.filter((user) => user.uid !== uid));
+      console.log("User deleted successfully");
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
+  
+  
 
   const columnNames = [
     "Photo",
@@ -137,7 +164,10 @@ export default function ManageUsers() {
                       )}
                     </button>
                   </td>
-                  <td className="px-4 py-2 text-xs md:text-sm lg:text-base text-pink-400 cursor-pointer">
+                  <td 
+                  className="px-4 py-2 text-xs md:text-sm lg:text-base text-pink-400 cursor-pointer"
+                  onClick={() => handleDelete(user.uid)}
+                  >
                     delete
                   </td>
                 </tr>

@@ -59,6 +59,15 @@ export const UserProvider = ({ children }) => {
   };
 
   // Delete User Function
+const deleteUser = async (uid) => {
+  try {
+    await deleteDoc(doc(db, "users", uid)); // حذف المستخدم من Firestore
+  } catch (error) {
+    console.error("Error deleting user: ", error);
+    throw error; // علشان لو فيه مشكلة ترجع للمكان اللي استدعى الدالة
+  }
+};
+
   
 
    // Logout Function
@@ -72,7 +81,7 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, updateUser, userRole, setUserRole, loading, logout}}>
+    <UserContext.Provider value={{ user, updateUser, userRole, setUserRole, loading, logout, deleteUser}}>
       {children}
     </UserContext.Provider>
   );
