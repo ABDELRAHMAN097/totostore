@@ -10,6 +10,9 @@ import { useCart } from "../../CartContext/CartContext.jsx"; // ضع المسا�
 import Image from "next/image";
 import { toast } from "react-toastify";
 import { BarLoader } from "react-spinners";
+import { FaArrowRight } from "react-icons/fa";
+import { FaFacebookF } from "react-icons/fa";
+import { FaTiktok } from "react-icons/fa";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -40,7 +43,7 @@ const ProductDetails = () => {
 
   useEffect(() => {
     if (!id) return;
-    
+
     const fetchProduct = async () => {
       try {
         const docRef = doc(db, "products", id);
@@ -50,7 +53,7 @@ const ProductDetails = () => {
           console.log("Fetched Product Data:", productData);
           setProduct(productData);
           setSelectedImage(productData.imageUrls?.[0] || "/placeholder.png");
-        }else {
+        } else {
           console.log("No such product found!");
         }
       } catch (error) {
@@ -62,9 +65,12 @@ const ProductDetails = () => {
     fetchProduct();
   }, [id]);
 
-  if (loading) return <div className="loading-overlay">
-  <BarLoader color={"#d60096"} loading={loading} size={350} />
-</div>;
+  if (loading)
+    return (
+      <div className="loading-overlay">
+        <BarLoader color={"#d60096"} loading={loading} size={350} />
+      </div>
+    );
   if (!product) return <p className="text-center">Product not found!</p>;
 
   const discountAmount = (product.price * product.discount) / 100;
@@ -107,7 +113,7 @@ const ProductDetails = () => {
           className="flex items-center justify-center mt-4 bg-pink-500 text-white py-2 px-4 rounded w-full"
         >
           <GiShoppingCart className="inline mr-2" />
-          Add to cart
+          اطلب الان!
         </button>
         <button
           onClick={() => handleAddToWishlist(product)}
@@ -115,6 +121,20 @@ const ProductDetails = () => {
         >
           <FaRegHeart className="inline mr-2" /> Add to Wishlist
         </button>
+        <div className="flex items-center justify-between mt-2">
+          <div className="flex items-center">
+            contact us{" "}
+            <FaArrowRight className="text-pink-500 text-[18px] ml-1" />
+          </div>
+          <div className="flex items-center">
+          <a href="https://web.facebook.com/profile.php?id=61563414478280">
+            <FaFacebookF className="text-pink-500 text-[18px] ml-5" />
+          </a>
+          <a href="https://www.tiktok.com/@toto00store?_t=ZS-8uQuCuPR9LW&_r=1">
+            <FaTiktok className="text-pink-500 text-[18px] ml-3" />
+          </a>
+          </div>
+        </div>
       </div>
 
       {/* عرض الصور */}
