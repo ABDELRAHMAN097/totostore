@@ -27,7 +27,7 @@ const ProductDetails = () => {
 
   // handleOrderNow
   const handleOrderNow = (product) => {
-    const phoneNumber = "01023671214"; // رقم الواتساب الخاص بك
+    const phoneNumber = "0201023671214"; // رقم الواتساب الخاص بك
     const productUrl = window.location.href; // رابط المنتج الحالي
     const message = `مرحبًا، أريد طلب هذا المنتج: ${product.name}\n${productUrl}`;
   
