@@ -109,7 +109,7 @@ const ProductDetails = () => {
           className="flex items-center justify-center mt-4 bg-pink-500 text-white py-2 px-4 rounded w-full"
         >
           <GiShoppingCart className="inline mr-2" />
-          اطلب الان!
+          Buy now!
         </button>
 
         <button
@@ -120,7 +120,7 @@ const ProductDetails = () => {
         </button>
         <div className="flex items-center justify-between mt-2">
           <div className="flex items-center">
-            contact us{" "}
+            contact us
             <FaArrowRight className="text-pink-500 text-[18px] ml-1" />
           </div>
           <div className="flex items-center">
