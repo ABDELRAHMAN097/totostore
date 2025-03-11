@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="">
           <div className="flex items-center justify-between">
             <Link href="/signup">
-              <span className="me-4">Register for free</span>
+              
               <button
                 type="button"
                 className="inline-block rounded-full border-2 border-neutral-50 px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-neutral-50 transition duration-150 ease-in-out hover:border-neutral-300 hover:text-neutral-200 focus:border-neutral-300 focus:text-neutral-200 focus:outline-none focus:ring-0 active:border-neutral-300 active:text-neutral-200 dark:hover:bg-fuchsia-500 dark:focus:bg-neutral-600"
@@ -22,8 +22,6 @@ const Footer = () => {
               </button>
             </Link>
             <div className="flex items-center">
-              contact us{" "}
-              <FaArrowRight className="text-white text-[18px] ml-1" />
               <a href="https://web.facebook.com/profile.php?id=61563414478280">
               <FaFacebookF  className="text-white text-[18px] ml-5"/>
               </a>
