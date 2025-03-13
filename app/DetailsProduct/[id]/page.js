@@ -13,6 +13,7 @@ import { BarLoader } from "react-spinners";
 import { FaArrowRight } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
 import { FaTiktok } from "react-icons/fa";
+import { BsWhatsapp } from "react-icons/bs";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -36,6 +37,23 @@ const ProductDetails = () => {
     // فتح الرابط في نافذة جديدة
     window.open(whatsappUrl, "_blank");
   };
+
+  // Add product to shopping cart
+  const handleAddToCart = (product) => {
+    addToCart(product);
+    localStorage.setItem("cartItems", JSON.stringify([...cartItems, product]));
+    toast.success(
+      <div>
+        <span className="text-green-500">{product.name}</span> has been added to
+        your cart!
+      </div>,
+      {
+        position: "top-right",
+        autoClose: 2000,
+      }
+    );
+  };
+
 
   useEffect(() => {
     if (!id) return;
@@ -108,10 +126,16 @@ const ProductDetails = () => {
           onClick={() => handleOrderNow(product)}
           className="flex items-center justify-center mt-4 bg-pink-500 text-white py-2 px-4 rounded w-full"
         >
-          <GiShoppingCart className="inline mr-2" />
+          <BsWhatsapp  className="inline mr-2" />
           اطلب الان!
         </button>
-
+        <button
+          onClick={() => handleAddToCart(product)}
+          className="flex items-center justify-center mt-4 bg-pink-500 text-white py-2 px-4 rounded w-full"
+        >
+          <GiShoppingCart className="inline mr-2" />
+          Add to cart
+        </button>
         <button
           onClick={() => handleAddToWishlist(product)}
           className="flex items-center justify-center mt-2 bg-gray-200 text-gray-700 py-2 px-4 rounded w-full"
