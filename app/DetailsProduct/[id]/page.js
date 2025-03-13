@@ -28,7 +28,7 @@ const ProductDetails = () => {
 
   // handleOrderNow
   const handleOrderNow = (product) => {
-    const phoneNumber = "01023671214"; // رقم الواتساب الخاص بك
+    const phoneNumber = "0201023671214"; // رقم الواتساب الخاص بك
     const productUrl = window.location.href; // رابط المنتج الحالي
     const message = `مرحبًا، أريد طلب هذا المنتج: ${product.name}\n${productUrl}`;
   
@@ -126,8 +126,13 @@ const ProductDetails = () => {
           onClick={() => handleOrderNow(product)}
           className="flex items-center justify-center mt-4 bg-pink-500 text-white py-2 px-4 rounded w-full"
         >
+<<<<<<< HEAD
           <BsWhatsapp  className="inline mr-2" />
           اطلب الان!
+=======
+          <GiShoppingCart className="inline mr-2" />
+          Buy now!
+>>>>>>> 1e1e7c16c634434e2aa7999abbdd912344454e2f
         </button>
         <button
           onClick={() => handleAddToCart(product)}
@@ -144,7 +149,7 @@ const ProductDetails = () => {
         </button>
         <div className="flex items-center justify-between mt-2">
           <div className="flex items-center">
-            contact us{" "}
+            contact us
             <FaArrowRight className="text-pink-500 text-[18px] ml-1" />
           </div>
           <div className="flex items-center">
