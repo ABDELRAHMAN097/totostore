@@ -126,9 +126,7 @@ const ProductDetails = () => {
           onClick={() => handleOrderNow(product)}
           className="flex items-center justify-center mt-4 bg-pink-500 text-white py-2 px-4 rounded w-full"
         >
-
           <BsWhatsapp  className="inline mr-2" />
-          <GiShoppingCart className="inline mr-2" />
           Buy now!
         </button>
         <button
