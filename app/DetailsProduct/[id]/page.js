@@ -128,7 +128,6 @@ const ProductDetails = () => {
         >
 
           <BsWhatsapp  className="inline mr-2" />
-          اطلب الان!
           <GiShoppingCart className="inline mr-2" />
           Buy now!
         </button>
