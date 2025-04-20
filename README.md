@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🛍️ TOTO Store - متجر إلكتروني بسيط وذكي
 
-## Getting Started
+TOTO Store هو موقع متجر إلكتروني تم تطويره باستخدام Next.js و Firebase. بيوفر تجربة سهلة واحترافية للمستخدمين مع نظام تسجيل دخول، لوحة تحكم للإدارة، وتحكم كامل في المنتجات.
 
-First, run the development server:
+الموقع مصمم لعرض المنتجات بطريقة جذابة مع زر تواصل مباشر على **واتساب** لسرعة التواصل بين العميل وصاحب المشروع.
+
+---
+
+## ✨ المميزات الرئيسية
+
+- 🔐 **نظام تسجيل الدخول والتسجيل** باستخدام Firebase.
+- 🧑‍💼 **تقسيم المستخدمين** بين مسؤول (Admin) ومستخدم عادي.
+- 🚫 **حماية الصفحات** من الوصول غير المصرّح به.
+- 🛍️ **لوحة تحكم للإدارة**: إضافة، تعديل، حذف منتجات.
+- 📦 **عرض ديناميكي للمنتجات** مع صفحة مخصصة لكل منتج.
+- 📱 **تصميم متجاوب** متوافق مع جميع الشاشات.
+- 💬 **زر تواصل مباشر عبر واتساب** في كل صفحة منتج.
+- 🎉 **إشعارات فورية (Toast)** لتأكيد العمليات.
+- 🌐 **تعدد الصفحات (Home, About, Women, Layout, Wishlist, etc)**.
+
+---
+
+## 🧑‍💻 التقنيات المستخدمة
+
+- [Next.js](https://nextjs.org/)
+- [React](https://reactjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Firebase Auth](https://firebase.google.com/products/auth)
+- [Cloud Firestore](https://firebase.google.com/products/firestore)
+- Context API (لعربة التسوق وحالة المستخدم)
+- LocalStorage (لحفظ عربة التسوق)
+- WhatsApp API (للربط المباشر)
+
+---
+
+## 🚀 طريقة التشغيل المحلي
 
 ```bash
+# 1. كلون للمشروع
+git clone https://github.com/ABDELRAHMAN097/totostore.git
+cd totostore
+
+# 2. تثبيت الاعتمادات
+npm install
+
+# 3. تشغيل الموقع على الخادم المحلي
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+TOTO Store is a simple e-commerce site built with Next.js and Firebase. It includes login system, admin dashboard for full product management, and a WhatsApp integration for fast and direct customer communication.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+🛠️ Features:
 
-## Learn More
+Login / Signup
 
-To learn more about Next.js, take a look at the following resources:
+Admin & User Roles
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Protected Routes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Add / Edit / Delete Products
 
-## Deploy on Vercel
+WhatsApp Button in Product Page
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Mobile Responsive Design
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Toast Notifications
+
+🔧 Stack: Next.js + Firebase + Tailwind + React + Context API
+
+💬 No payment gateway yet, but WhatsApp chat simplifies the deal-making process.
+
