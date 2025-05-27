@@ -20,7 +20,7 @@ export default function GetUsers() {
           ...doc.data(),
         }));
 
-        // تصفية المستخدمين الذين ليس لديهم دور Admin
+       
         const regularUsers = allUsers.filter((user) => !user.isAdmin);
         setUsers(regularUsers);
         setLoading(false);
@@ -39,8 +39,8 @@ export default function GetUsers() {
     if (!confirmDelete) return;
 
     try {
-      await deleteDoc(doc(db, "users", uid)); // حذف المستخدم من Firestore
-      setUsers((prevUsers) => prevUsers.filter((user) => user.uid !== uid)); // تحديث الحالة
+      await deleteDoc(doc(db, "users", uid)); 
+      setUsers((prevUsers) => prevUsers.filter((user) => user.uid !== uid)); 
     } catch (error) {
       console.error("Error deleting user:", error);
       setError(error);

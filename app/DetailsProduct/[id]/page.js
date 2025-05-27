@@ -6,7 +6,7 @@ import { db } from "../../firebase";
 import { IoIosStar } from "react-icons/io";
 import { FaRegHeart } from "react-icons/fa";
 import { GiShoppingCart } from "react-icons/gi";
-import { useCart } from "../../CartContext/CartContext.jsx"; // ضع المسار الصحيح هنا
+import { useCart } from "../../CartContext/CartContext.jsx"; 
 import Image from "next/image";
 import { toast } from "react-toastify";
 import { BarLoader } from "react-spinners";
@@ -28,13 +28,12 @@ const ProductDetails = () => {
 
   // handleOrderNow
   const handleOrderNow = (product) => {
-    const phoneNumber = "0201023671214"; // رقم الواتساب الخاص بك
-    const productUrl = window.location.href; // رابط المنتج الحالي
+    const phoneNumber = "0201023671214"; 
+    const productUrl = window.location.href; 
     const message = `مرحبًا، أريد طلب هذا المنتج: ${product.name}\n${productUrl}`;
   
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     
-    // فتح الرابط في نافذة جديدة
     window.open(whatsappUrl, "_blank");
   };
 
@@ -63,7 +62,7 @@ const ProductDetails = () => {
         const docRef = doc(db, "products", id);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          const productData = docSnap.data(); // تم إصلاح الخطأ هنا
+          const productData = docSnap.data(); 
           console.log("Fetched Product Data:", productData);
           setProduct(productData);
           setSelectedImage(productData.imageUrls?.[0] || "/placeholder.png");
@@ -97,7 +96,7 @@ const ProductDetails = () => {
           <BarLoader color={"#d60096"} loading={loading} size={350} />
         </div>
       )}
-      {/* تفاصيل المنتج */}
+      {/* details */}
       <div className="md:w-1/2 text-end">
         <h2 className="text-pink-500 font-semibold mb-2">{product.brand}</h2>
         <p className="text-xl text-gray-600 font-semibold">
@@ -158,9 +157,9 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      {/* عرض الصور */}
+      {/* */}
       <div className="flex md:w-1/2 mt-3 md:mt-0">
-        {/* الصورة الكبيرة على الشمال */}
+        {/* */}
         <div className="w-3/4">
           <img
             className="rounded-lg w-full object-cover"
@@ -169,7 +168,7 @@ const ProductDetails = () => {
           />
         </div>
 
-        {/* الصور الصغيرة على اليمين */}
+        {/*  */}
         <div className="flex flex-col w-1/4 pl-4">
           {product.imageUrls?.map((img, index) => (
             <Image
@@ -178,6 +177,7 @@ const ProductDetails = () => {
               alt={product.name}
               width={80}
               height={80}
+              priority
               className="border w-full h-auto mb-2 rounded-lg cursor-pointer"
               onClick={() => setSelectedImage(img)}
             />

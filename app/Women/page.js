@@ -51,7 +51,6 @@ export default function WomenProductsPage() {
     }
   };
 
-  // Add product to shopping cart
   const handleAddToCart = (product) => {
     addToCart(product);
     localStorage.setItem("cartItems", JSON.stringify([...cartItems, product]));
@@ -67,13 +66,12 @@ export default function WomenProductsPage() {
     );
   };
 
-  // (Auto Vertical Carousel)
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % 4); // 3 لأن لدينا 3 عناصر فقط
-    }, 2000); // تغيير كل ثانيتين
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % 4); 
+    }, 2000); 
 
     return () => clearInterval(interval);
   }, []);

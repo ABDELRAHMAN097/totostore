@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useCart } from "../CartContext/CartContext"; // ضع المسار الصحيح هنا
+import { useCart } from "../CartContext/CartContext"; 
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { RiCloseCircleLine } from "react-icons/ri";
 import { FaRegHeart } from "react-icons/fa";
@@ -47,13 +47,12 @@ export default function Page() {
     );
   };
 
-  // (Auto Vertical Carousel)
     const [currentIndex, setCurrentIndex] = useState(0);
   
     useEffect(() => {
       const interval = setInterval(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % 4); // 3 لأن لدينا 3 عناصر فقط
-      }, 2000); // تغيير كل ثانيتين
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % 4); 
+      }, 2000); 
   
       return () => clearInterval(interval);
     }, []);
@@ -65,7 +64,7 @@ export default function Page() {
         <div className="products px-2 md:p-0">
           {wishlistItems.map((product) => (
               <div
-              onClick={() => router.push(`/DetailsProduct/${product.id}`)} // ✅ توجيه عند الضغط على البطاقة
+              onClick={() => router.push(`/DetailsProduct/${product.id}`)} 
               className="border relative my-2 mx-1 w-[300px] md:w-48 block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark min-h-[363px] md:min-h-[230px] cursor-pointer"
             >
               {" "}
@@ -101,7 +100,6 @@ export default function Page() {
                     {product.rating} <IoIosStar className="text-[14px]" />
                   </p>
                     
-                  {/* Auto Vertical Carousel */}
                   <div className="h-6 overflow-hidden text-gray-700 font-medium">
                     <motion.div
                       key={currentIndex}
@@ -145,8 +143,8 @@ export default function Page() {
                   className="absolute left-1 top-1 text-gray-500 bg-white rounded p-1"
                   onClick={(e) => {
                     e.preventDefault();
-                    e.stopPropagation(); // توقف انتشار الحدث
-                    removeFromWishlist(product.id); // نفذ الدالة المطلوبة
+                    e.stopPropagation();
+                    removeFromWishlist(product.id); 
                   }}
                 >
                   <RiCloseCircleLine />
@@ -154,9 +152,9 @@ export default function Page() {
                 <button
                   className="absolute left-10 top-1 text-gray-500 bg-white rounded p-1"
                   onClick={(e) => {
-                    e.preventDefault(); // منع السلوك الافتراضي
-                    e.stopPropagation(); // منع انتشار الحدث
-                    handleAddToCart(product); // نفذ الدالة المطلوبة
+                    e.preventDefault(); 
+                    e.stopPropagation();
+                    handleAddToCart(product); 
                   }}
                 >
                   <GiShoppingCart className="text-pink-500" />
@@ -184,35 +182,6 @@ export default function Page() {
             </div>
           </div>
         )}
-
-        {/* الفلاتر */}
-        {/* <div className="flex justify-between items-center mt-6">
-          <div className="flex items-center space-x-4">
-            <label htmlFor="size" className="text-lg">
-              Size:
-            </label>
-            <select id="size" className="p-2 border border-gray-300 rounded-lg">
-              <option value="all">All</option>
-              <option value="s">Small</option>
-              <option value="m">Mediam</option>
-              <option value="l">Large</option>
-            </select>
-          </div>
-          <div className="flex items-center space-x-4">
-            <label htmlFor="price" className="text-lg">
-              Price:
-            </label>
-            <select
-              id="price"
-              className="p-2 border border-gray-300 rounded-lg"
-            >
-              <option value="all">All</option>
-              <option value="0-100">0-100</option>
-              <option value="100-500">100-500</option>
-              <option value="500+">over than 500</option>
-            </select>
-          </div>
-        </div> */}
       </div>
   );
 }

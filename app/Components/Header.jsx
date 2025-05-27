@@ -11,9 +11,8 @@ import LogoutButton from "../LogoutButton/LogoutButton";
 const Header = () => {
   const { user } = useUser();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null); // مرجع لمراقبة القائمة
+  const dropdownRef = useRef(null); 
 
-  // إغلاق القائمة عند الضغط خارجها
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {

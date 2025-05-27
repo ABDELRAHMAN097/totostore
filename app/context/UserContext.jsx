@@ -8,7 +8,7 @@ const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [userRole, setUserRole] = useState(null); // تعريف userRole و setUserRole
+  const [userRole, setUserRole] = useState(null); 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

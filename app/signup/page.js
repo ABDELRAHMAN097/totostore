@@ -27,7 +27,6 @@ export default function Signup() {
       );
       const user = userCredential.user;
 
-      // رفع الصورة في Firebase Storage
       let imageUrl = "";
       if (image) {
         const imageRef = ref(storage, `profile_images/${user.uid}`);
@@ -35,12 +34,11 @@ export default function Signup() {
         imageUrl = await getDownloadURL(imageRef);
       }
 
-      // حفظ بيانات المستخدم في Firestore
       await setDoc(doc(db, "users", user.uid), {
         email: user.email,
         name: name,
         phone: phone,
-        imageUrl: imageUrl, // إضافة رابط الصورة
+        imageUrl: imageUrl, 
         isAdmin: false,
       });
 

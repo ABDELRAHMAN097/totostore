@@ -16,7 +16,7 @@ const Home = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % images.length);
-    }, 3000); // تغيير الصورة كل 3 ثواني
+    }, 3000); 
     return () => clearInterval(interval);
   }, []);
 
